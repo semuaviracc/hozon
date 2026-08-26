@@ -1,0 +1,12 @@
+{
+  "name": "hozon-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ho Zon - Ontologi Sang Hidup",
+  "scripts": {
+    "compile": "node compile.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

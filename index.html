@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ho Zon — Ontologi Sang Hidup</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cinzel Decorative, Playfair Display, and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Marked.js Markdown Parser CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hozon: {
+                            dark: '#010504',     // Background utama abyssal forest-black (sangat kontras)
+                            card: '#040d0a',     // Background card tebal
+                            cardActive: '#081713', // Card saat aktif
+                            border: '#0c211a',   // Border redup
+                            borderActive: '#1c4a3b', // Border menyala hijau
+                            ivory: '#fbf9f5',    // Teks utama gading hangat
+                            ivoryMuted: '#8aa29d', // Teks sekunder abu kehijauan
+                            gold: '#d4af37',     // Emas berkilau
+                            goldMuted: '#a38020'  // Emas redup/perunggu
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        spectral: ['Spectral', 'serif'],
+                        cinzel: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom smooth transitions & ambient glows */
+        body {
+            background-color: #010504;
+            color: #fbf9f5;
+            font-family: 'Spectral', serif;
+            overflow-x: hidden;
+        }
+        .gold-glow {
+            transition: all 0.4s ease;
+        }
+        .gold-glow:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+            border-color: #d4af37;
+        }
+        /* Custom scrollbar for library feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #010504;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0c211a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+        /* Ambient mist in background */
+        .ambient-bg {
+            background: radial-gradient(circle at 50% 40%, rgba(12, 33, 26, 0.4) 0%, rgba(1, 5, 4, 1) 75%);
+        }
+        /* Network lines smooth transition */
+        .network-line {
+            transition: stroke 0.6s ease, stroke-width 0.6s ease, opacity 0.6s ease;
+        }
+        /* Floating pulsing animation for Ho Zon node */
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.25));
+                border-color: #d4af37;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6));
+                border-color: #fbf9f5;
+            }
+        }
+        .pulse-node {
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+        /* Abstract cosmic nebula background */
+        .cosmic-nebula {
+            position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none;
+        }
+        .cosmic-nebula .nebula-orb {
+            position: absolute; border-radius: 50%; filter: blur(70px);
+        }
+        .cosmic-nebula .orb-1 {
+            width: 500px; height: 500px; top: -120px; left: -80px;
+            background: radial-gradient(circle, rgba(20,60,100,0.25) 0%, transparent 70%);
+            animation: nebulaOrb1 18s ease-in-out infinite alternate;
+        }
+        .cosmic-nebula .orb-2 {
+            width: 400px; height: 400px; bottom: -100px; right: -60px;
+            background: radial-gradient(circle, rgba(50,30,80,0.2) 0%, transparent 70%);
+            animation: nebulaOrb2 22s ease-in-out infinite alternate-reverse;
+        }
+        .cosmic-nebula .orb-3 {
+            width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 60%);
+            animation: nebulaOrb3 12s ease-in-out infinite alternate;
+        }
+        @keyframes nebulaOrb1 { 0%{transform:translate(0,0) scale(1);opacity:.5} 100%{transform:translate(40px,-30px) scale(1.15);opacity:.8} }
+        @keyframes nebulaOrb2 { 0%{transform:translate(0,0) scale(1);opacity:.4} 100%{transform:translate(-30px,20px) scale(1.1);opacity:.7} }
+        @keyframes nebulaOrb3 { 0%{transform:translate(-50%,-50%) scale(1);opacity:.3} 100%{transform:translate(-50%,-50%) scale(1.3);opacity:.6} }
+        @keyframes morph {
+            0% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
+            34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+            67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
+            100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleWidth { from { width: 0; opacity: 0; } to { width: 5rem; opacity: 1; } }
+        @keyframes wobble3d {
+            0% { transform: rotateX(68deg) rotateY(-5deg); }
+            25% { transform: rotateX(73deg) rotateY(2deg); }
+            50% { transform: rotateX(65deg) rotateY(8deg); }
+            75% { transform: rotateX(61deg) rotateY(-2deg); }
+            100% { transform: rotateX(68deg) rotateY(-5deg); }
+        }
+        .animate-wobble3d {
+            animation: wobble3d 25s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+        /* Lightning beam effect */
+        .lightning-beam { opacity: 0; transition: opacity 0.3s ease; }
+        .lightning-beam.active { opacity: 1; }
+        @keyframes energyFlow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+        @keyframes energyFlowReverse { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 18; } }
+        .energy-flow { animation: energyFlow 0.6s linear infinite; }
+        .energy-core { animation: energyFlowReverse 0.9s linear infinite; }
+        /* Connection lines default */
+        .concept-connection { transition: all 0.5s ease; }
+
+        /* Collapsed flow to center for outer concept nodes */
+        .collapsed-to-center {
+            left: 50% !important;
+            top: 50% !important;
+            opacity: 0 !important;
+            transform: translate(-50%, -50%) scale(0.1) !important;
+            pointer-events: none !important;
+            transition: left 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        top 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 1.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+        
+        /* Default floating node transition (slow collapse/return, fast hover) */
+        .floating-concept-node {
+            transition: left 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        top 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 1.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+        .floating-concept-node:hover {
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+        
+        #detail-definition strong, #modal-body strong,
+        #detail-definition b, #modal-body b {
+            font-weight: 600 !important;
+            color: #fbf9f5 !important;
+            text-shadow: 0 0 1px rgba(251, 249, 245, 0.2);
+        }
+        #detail-definition em, #modal-body em,
+        #detail-definition i, #modal-body i {
+            font-style: italic !important;
+        }
+
+        #center-node-title {
+            transition: all 0.5s ease;
+        }
+        #center-node-subtitle {
+            display: none;
+        }
+        
+        /* Expanded style for center node */
+        .center-node-expanded {
+            width: 24% !important; /* 192px instead of 80px */
+            height: 48% !important;
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 65px rgba(212, 175, 55, 0.85) !important;
+            background: radial-gradient(ellipse at 40% 35%, rgba(212,175,55,0.45) 0%, rgba(180,130,20,0.22) 35%, rgba(10,8,2,0.98) 70%) !important;
+        }
+        .center-node-expanded #center-node-title {
+            font-size: 13px !important;
+            letter-spacing: 0.15em !important;
+            transform: translateY(-5px);
+        }
+        .center-node-expanded #center-node-subtitle {
+            display: block !important;
+        }
+
+        /* Prevent keyframe translate overriding when center expanded */
+        .center-node-expanded-pulse {
+            animation: pulseGlowExpanded 4.5s ease-in-out infinite !important;
+        }
+        @keyframes pulseGlowExpanded {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.55));
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.04);
+                filter: drop-shadow(0 0 65px rgba(212, 175, 55, 0.95));
+            }
+        }
+
+        /* Expanded style for the rotating orbit text and rings */
+        .expanded-orbit {
+            transform: scale(1.9); /* Majestic scale */
+            transform-origin: 400px 200px;
+        }
+
+        /* Blockquote, paragraphs, and spacing for Markdown-rendered details and modals */
+        #detail-definition p, #modal-body p {
+            margin-bottom: 1rem !important;
+            font-size: inherit !important;
+            line-height: inherit !important;
+        }
+        #detail-definition blockquote, #modal-body blockquote {
+            border-left: 2px solid #d4af37 !important;
+            padding-left: 1.25rem !important;
+            margin-top: 1.25rem !important;
+            margin-bottom: 1.5rem !important;
+            font-family: 'Spectral', serif !important;
+            font-style: italic !important;
+            color: #d4af37 !important;
+            font-size: 1.125rem !important;
+            line-height: 1.625 !important;
+        }
+        #detail-definition ul, #modal-body ul {
+            list-style-type: disc !important;
+            padding-left: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        #detail-definition li, #modal-body li {
+            margin-bottom: 0.5rem !important;
+            font-size: inherit !important;
+            line-height: inherit !important;
+        }
+        #detail-definition h3, #modal-body h3 {
+            font-family: 'Cinzel', serif !important;
+            color: #d4af37 !important;
+            font-size: 1rem !important;
+            font-weight: bold !important;
+            letter-spacing: 0.1em !important;
+            margin-top: 1.75rem !important;
+            margin-bottom: 0.75rem !important;
+            text-transform: uppercase !important;
+        }
+
+        /* Custom cursor dihapus — memakai cursor default browser. */
+
+        /* Parchment Theme Styles */
+        .parchment-theme .bg-hozon-card {
+            background-color: #f5ecd2 !important;
+            border-color: #d8c7a3 !important;
+            box-shadow: 0 25px 50px -12px rgba(112, 84, 23, 0.25) !important;
+        }
+        .parchment-theme .bg-hozon-dark\/40 {
+            background-color: #fcf8ee !important;
+        }
+        .parchment-theme .border-hozon-border {
+            border-color: #e3d3b4 !important;
+        }
+        .parchment-theme .border-b {
+            border-bottom-color: #e3d3b4 !important;
+        }
+        .parchment-theme .border-t {
+            border-top-color: #e3d3b4 !important;
+        }
+        .parchment-theme #modal-title {
+            color: #1a1108 !important;
+        }
+        .parchment-theme #modal-category {
+            color: #8c6b23 !important;
+        }
+        .parchment-theme #modal-body {
+            color: #2c2115 !important;
+        }
+        .parchment-theme #modal-body p {
+            color: #2c2115 !important;
+        }
+        .parchment-theme #modal-body strong {
+            color: #1a1108 !important;
+            font-weight: 600 !important;
+        }
+        .parchment-theme #modal-body blockquote {
+            border-left-color: #8c6b23 !important;
+            color: #705417 !important;
+        }
+        .parchment-theme #modal-body h3 {
+            color: #8c6b23 !important;
+        }
+        .parchment-theme #modal-footer-text {
+            color: #8c785c !important;
+        }
+        .parchment-theme #modal-footer-btn {
+            border-color: #d8c7a3 !important;
+            color: #8c6b23 !important;
+            background-color: #fcf8ee !important;
+        }
+        .parchment-theme #modal-footer-btn:hover {
+            border-color: #8c6b23 !important;
+            color: #1a1108 !important;
+            background-color: #f5ecd2 !important;
+        }
+        .parchment-theme #modal-body::-webkit-scrollbar-thumb {
+            background-color: #d8c7a3 !important;
+        }
+        .parchment-theme #modal-body::-webkit-scrollbar-track {
+            background-color: #fcf8ee !important;
+        }
+        
+        /* Fallback badge styling inside parchment mode */
+        .parchment-theme #modal-body .bg-hozon-gold\/5 {
+            background-color: rgba(140, 107, 35, 0.08) !important;
+            border-color: rgba(140, 107, 35, 0.25) !important;
+            color: #8c6b23 !important;
+        }
+
+        /* Modal theme selector styling in parchment mode */
+        .parchment-theme .modal-theme-toggle-bg {
+            background-color: #e3d3b4 !important;
+            border-color: #c9b895 !important;
+        }
+        .parchment-theme .modal-theme-btn-active {
+            background-color: #8c6b23 !important;
+            color: #ffffff !important;
+        }
+        .parchment-theme .modal-theme-btn-inactive {
+            color: #705b41 !important;
+        }
+        .parchment-theme .modal-theme-btn-inactive:hover {
+            color: #8c6b23 !important;
+        }
+    </style>
+</head>
+<body class="bg-[#010504] min-h-screen flex flex-col justify-between selection:bg-hozon-gold/30 selection:text-hozon-ivory">
+
+
+    <!-- Cinematic Transition Overlay -->
+    <div id="transition-overlay" class="fixed inset-0 bg-[#010504] z-[100] transition-opacity duration-500 opacity-0 pointer-events-none"></div>
+
+    <!-- Ambient Background Audio -->
+    <audio id="ambient-audio" src="audio/ambient.mp3" loop preload="auto"></audio>
+
+    <!-- Ambient Overlay Grid -->
+    <div class="fixed inset-0 pointer-events-none opacity-[0.15] z-0 bg-[radial-gradient(#1c4a3b_1px,transparent_1px)] [background-size:20px_26px]"></div>
+
+    <!-- ──────────────────────────────────────────────────────── -->
+    <!-- SCREEN 1: LANDING / ENTRANCE                             -->
+    <!-- ──────────────────────────────────────────────────────── -->
+    <!-- ──────────────────────────────────────────────────────── -->
+    <!-- SCREEN 1: LANDING / ENTRANCE                             -->
+    <!-- ──────────────────────────────────────────────────────── -->
+    <div id="screen-landing" class="relative z-10 flex-grow flex flex-col items-center justify-center px-6 transition duration-1000 overflow-hidden">
+        
+        <!-- Language Switcher (Landing Page, top-right) -->
+        <div class="absolute top-6 right-6 z-30 flex items-center gap-1 border border-hozon-gold/20 bg-hozon-dark/60 backdrop-blur-sm p-1 rounded-full">
+            <button onclick="setLanguage('id')" id="lang-id-btn" 
+                class="w-[28px] h-[28px] flex items-center justify-center text-[10px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]">
+                ID
+            </button>
+            <button onclick="setLanguage('en')" id="lang-en-btn"
+                class="w-[28px] h-[28px] flex items-center justify-center text-[10px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold">
+                EN
+            </button>
+        </div>
+
+        <!-- TOP SECTION: Centered Title + Glow + Rings -->
+        <div class="relative flex flex-col items-center justify-center w-full max-w-4xl mx-auto min-h-[50vh] mt-[-5vh]">
+            
+            <!-- BACKGROUND GLOWS (Centered directly behind the title group) -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 -translate-y-4 md:-translate-y-6">
+                
+                <!-- 3D Orbiting Rings & Nebula Wrapper -->
+                <div class="absolute w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] flex items-center justify-center" style="perspective: 1500px;">
+                    <div class="absolute w-full h-full animate-wobble3d">
+                        
+                        <!-- The Nebula Disk: Appears with HO ZON (0s delay) -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 animate-[fadeIn_3s_ease_forwards_0s]" style="mask-image: radial-gradient(circle, black 35%, transparent 68%); -webkit-mask-image: radial-gradient(circle, black 35%, transparent 68%);">
+                            <!-- Red/Gold Core Glow -->
+                            <div class="absolute inset-0 mix-blend-screen opacity-90" style="background: radial-gradient(circle, rgba(190, 20, 30, 0.7) 10%, rgba(212, 175, 55, 0.6) 40%, transparent 70%); animation: pulseGlow 4s infinite alternate;"></div>
+                            <!-- Spinning Nebula Image -->
+                            <div class="absolute inset-0 scale-125 mix-blend-screen opacity-70 animate-[spin_100s_linear_infinite]" style="background: url('nebula.png') center/cover no-repeat; filter: blur(10px) contrast(1.4);"></div>
+                        </div>
+
+                        <!-- SVG Rings: Appears with The Living One (0.8s delay) -->
+                        <svg viewBox="0 0 1000 1000" class="w-full h-full absolute opacity-0 animate-[fadeIn_3s_ease_forwards_0.8s]">
+                            <defs>
+                                <path id="landingCirclePath" d="M 500,500 m -450,0 a 450,450 0 1,1 900,0 a 450,450 0 1,1 -900,0" fill="transparent" />
+                                <path id="landingCirclePathInner" d="M 500,500 m -390,0 a 390,390 0 1,1 780,0 a 390,390 0 1,1 -780,0" fill="transparent" />
+                            </defs>
+                            <!-- Outer Ring (Spins right) — TEMPORARILY HIDDEN -->
+                            <!--
+                            <g class="animate-[spin_60s_linear_infinite]" style="transform-origin: 500px 500px;">
+                                <circle cx="500" cy="500" r="450" class="stroke-hozon-gold/30 fill-transparent stroke-[1px]"/>
+                                <text class="fill-hozon-gold/80 text-[18px] tracking-[0.35em] font-cinzel font-bold">
+                                    <textPath href="#landingCirclePath" startOffset="0%">ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH •</textPath>
+                                </text>
+                            </g>
+                            -->
+                            <!-- Inner Ring (Spins left / reverse) -->
+                            <g class="animate-[spin_45s_linear_infinite_reverse]" style="transform-origin: 500px 500px;">
+                                <circle cx="500" cy="500" r="390" class="stroke-hozon-gold/20 fill-transparent stroke-[1px]"/>
+                                <text class="fill-hozon-gold/50 text-[14px] tracking-[0.25em] font-cinzel font-bold">
+                                    <textPath href="#landingCirclePathInner" startOffset="0%">QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD •</textPath>
+                                </text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITLE TEXT (HO ZON & The Living One) -->
+            <!-- Apple Effect: More Gold + Transparent text allowing nebula to shine through -->
+            <div class="flex flex-col items-center text-center relative z-10 pointer-events-none mt-8">
+                <!-- Appears first -->
+                <h1 class="font-cinzel text-6xl md:text-8xl tracking-[0.25em] pl-[0.25em] font-bold opacity-0 translate-y-8 landing-title-animated text-transparent bg-clip-text mb-3" style="background-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(251,249,245,1) 25%, rgba(212,175,55,1) 70%, rgba(212,175,55,0.8) 100%); filter: drop-shadow(0 0 25px rgba(212,175,55,0.8)) drop-shadow(0 0 60px rgba(212,175,55,0.4)) drop-shadow(0 0 4px rgba(255,255,255,0.5));">
+                    HO ZON
+                </h1>
+                <!-- Appears second (with Rings) -->
+                <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-hozon-gold to-transparent opacity-0 animate-[scaleWidth_1.5s_ease_forwards_0.8s] mb-4"></div>
+                <p id="ui-subtitle" class="font-serif italic text-2xl md:text-3xl tracking-wide opacity-0 animate-[fadeIn_1.5s_ease_forwards_0.8s] text-hozon-gold" style="text-shadow: 0 0 20px rgba(212,175,55,0.6), 0 0 40px rgba(212,175,55,0.3), 0 1px 3px rgba(0,0,0,0.8);">
+                    The Living One <span class="not-italic text-hozon-gold/45 mx-1.5">·</span> Sang Hidup
+                </p>
+            </div>
+            
+        </div>
+
+        <!-- BOTTOM SECTION: Statement + Button -->
+        <div class="max-w-2xl text-center space-y-12 relative z-20 mt-8">
+            <!-- Conceptual Statement (Appears third) — dwibahasa: EN utama, ID pendamping (statis, tidak ikut toggle) -->
+            <div class="space-y-4 max-w-xl mx-auto font-serif">
+                <div class="space-y-1">
+                    <p id="ui-landing-line1" class="text-hozon-ivory/80 text-lg md:text-xl font-light italic leading-relaxed opacity-0 animate-[fadeIn_1.8s_ease_forwards_1.8s]"
+                        style="text-shadow: 0 1px 8px rgba(0,0,0,0.8);">
+                        In the beginning, it was not a concept.
+                    </p>
+                    <p id="ui-landing-line2" class="text-hozon-ivory text-xl md:text-2xl font-normal italic tracking-wide opacity-0 animate-[fadeIn_1.8s_ease_forwards_2.4s]"
+                        style="text-shadow: 0 1px 10px rgba(0,0,0,0.8);">
+                        In the beginning, there was the Living One.
+                    </p>
+                </div>
+                <div class="w-10 h-px bg-hozon-gold/25 mx-auto opacity-0 animate-[scaleWidth_1.2s_ease_forwards_2.6s]"></div>
+                <div class="space-y-1">
+                    <p class="text-hozon-ivory/45 text-base md:text-lg font-light italic leading-relaxed opacity-0 animate-[fadeIn_1.8s_ease_forwards_2.7s]"
+                        style="text-shadow: 0 1px 8px rgba(0,0,0,0.8);">
+                        Pada mulanya bukan konsep.
+                    </p>
+                    <p class="text-hozon-ivory/60 text-lg md:text-xl font-normal italic tracking-wide opacity-0 animate-[fadeIn_1.8s_ease_forwards_2.9s]"
+                        style="text-shadow: 0 1px 10px rgba(0,0,0,0.8);">
+                        Pada mulanya adalah Sang Hidup.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Portal Enter Button (Appears last) -->
+            <div class="opacity-0 animate-[fadeInUp_1s_ease_forwards_3.0s] pt-4 flex justify-center">
+                <button onclick="enterHozonPortal()" class="group relative px-10 py-4 border border-hozon-gold/60 text-hozon-ivory rounded tracking-[0.25em] font-cinzel text-xs hover:text-hozon-gold transition-all duration-500 overflow-hidden gold-glow bg-hozon-dark/80 backdrop-blur-md">
+                    <span class="absolute inset-0 w-0 bg-hozon-borderActive/20 group-hover:w-full transition-all duration-500 ease-out z-0"></span>
+                    <span id="ui-enter-btn" class="relative z-10 flex flex-col items-center justify-center gap-1">
+                        <span class="flex items-center gap-3">ENTER THE GATEWAY <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1.5 transition-transform"></i></span>
+                        <span class="text-[9px] tracking-[0.3em] text-hozon-ivoryMuted group-hover:text-hozon-gold/70 transition-colors">MASUKI GERBANG</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ──────────────────────────────────────────────────────── -->
+    <!-- SCREEN 2: MAIN WORKSPACE (DASHBOARD & DETAILS)          -->
+    <!-- ──────────────────────────────────────────────────────── -->
+    <div id="screen-workspace" class="hidden relative z-20 flex-grow flex flex-col transition duration-1000 opacity-0">
+        
+        <!-- Header Navigation Bar -->
+        <header class="border-b border-white/10 bg-[#040d0a]/70 backdrop-blur-xl sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <!-- Branding -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showDashboard()">
+                    <h2 class="font-cinzel text-2xl tracking-[0.2em] text-hozon-gold font-bold">HO ZON</h2>
+                    <span id="ui-header-badge" class="text-[9px] uppercase tracking-[0.3em] px-2 py-0.5 border border-hozon-gold/40 rounded-full text-hozon-gold font-sans hidden sm:inline-block">Sang Hidup</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center gap-8 font-cinzel text-xs tracking-[0.15em] text-hozon-ivoryMuted">
+                    <button onclick="showDashboard()" id="nav-concepts" class="hover:text-hozon-gold active:scale-95 transition-all pb-1 text-hozon-gold border-b border-hozon-gold">CONCEPTS</button>
+                    <button onclick="showStudies()" id="nav-studies" class="hover:text-hozon-gold active:scale-95 transition-all pb-1">STUDIES</button>
+                    <!-- DIALOGUE & LIBRARY disembunyikan sementara — konten belum diselaraskan dengan kerangka Ho Zon (lih. framework.md §F). Aktifkan kembali dengan menghapus tanda komentar.
+                    <button onclick="showDialogue()" id="nav-dialogue" class="hover:text-hozon-gold active:scale-95 transition-all pb-1">DIALOGUE</button>
+                    <button onclick="showLibrary()" id="nav-library" class="hover:text-hozon-gold active:scale-95 transition-all pb-1">LIBRARY</button>
+                    -->
+                    <button onclick="showAbout()" id="nav-about" class="hover:text-hozon-gold active:scale-95 transition-all pb-1">ABOUT</button>
+                </nav>
+
+                <!-- Audio Ambient Controller & Language Switcher -->
+                <div class="flex items-center gap-4">
+                    <!-- Language Switcher in Header -->
+                    <div class="flex items-center gap-1 border border-hozon-border/40 bg-[#040d0a]/60 p-1 rounded-full">
+                        <button onclick="setLanguage('id')" id="header-lang-id-btn" 
+                            class="w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]">
+                            ID
+                        </button>
+                        <button onclick="setLanguage('en')" id="header-lang-en-btn"
+                            class="w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold">
+                            EN
+                        </button>
+                    </div>
+
+                    <!-- Ambient Audio Slider -->
+                    <div class="flex items-center gap-2 border border-hozon-border/40 bg-[#040d0a]/60 px-3 py-1.5 rounded-full text-xs">
+                        <button id="music-toggle-btn" onclick="toggleAmbientMusic()" class="text-hozon-gold hover:text-hozon-ivory transition-colors focus:outline-none flex items-center justify-center">
+                            <i data-lucide="play" class="w-3.5 h-3.5" id="music-icon"></i>
+                        </button>
+                        <span class="text-[8px] uppercase tracking-widest text-hozon-ivoryMuted font-sans select-none mr-1">Ambient</span>
+                        <input type="range" id="music-volume" min="0" max="1" step="0.05" value="0.3" class="w-12 sm:w-16 h-[2px] bg-hozon-border rounded-lg appearance-none cursor-pointer accent-hozon-gold" oninput="setMusicVolume(this.value)" style="background: rgba(212,175,55,0.2);">
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-hozon-ivoryMuted hover:text-hozon-gold">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-hozon-border bg-hozon-card px-6 py-4 space-y-4 font-cinzel text-sm tracking-[0.15em]">
+            <a href="#" id="mobile-nav-concepts" onclick="showDashboard(); toggleMobileMenu();" class="block text-hozon-gold">CONCEPTS</a>
+            <a href="#" id="mobile-nav-studies" onclick="showStudies(); toggleMobileMenu();" class="block text-hozon-ivoryMuted hover:text-hozon-gold">STUDIES</a>
+            <!-- DIALOGUE & LIBRARY disembunyikan sementara (lih. framework.md §F).
+            <a href="#" id="mobile-nav-dialogue" onclick="showDialogue(); toggleMobileMenu();" class="block text-hozon-ivoryMuted hover:text-hozon-gold">DIALOGUE</a>
+            <a href="#" id="mobile-nav-library" onclick="showLibrary(); toggleMobileMenu();" class="block text-hozon-ivoryMuted hover:text-hozon-gold">LIBRARY</a>
+            -->
+            <a href="#" id="mobile-nav-about" onclick="showAbout(); toggleMobileMenu();" class="block text-hozon-ivoryMuted hover:text-hozon-gold">ABOUT</a>
+            
+            <!-- Mobile Language Switcher -->
+            <div class="pt-3 border-t border-hozon-border/30 flex items-center gap-2">
+                <span class="text-[9px] text-hozon-ivoryMuted font-sans tracking-widest mr-1">LANGUAGE:</span>
+                <div class="flex items-center gap-1 border border-hozon-border/40 bg-[#040d0a]/60 p-1 rounded-full">
+                    <button onclick="setLanguage('id')" id="mobile-lang-id-btn" 
+                        class="w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]">
+                        ID
+                    </button>
+                    <button onclick="setLanguage('en')" id="mobile-lang-en-btn"
+                        class="w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold">
+                        EN
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow max-w-7xl w-full mx-auto px-6 py-12 relative space-y-12">
+            
+            <!-- SECTION A: THE CONCEPT MAP DASHBOARD (DEFAULT VIEW) -->
+            <section id="view-dashboard" class="space-y-12 animate-[fadeIn_0.6s_ease_forwards] transition-opacity duration-300">
+                
+                <!-- Manifesto Singkat (Brief Manifesto on top for high aura) -->
+                <div class="w-full text-center max-w-3xl mx-auto space-y-6 reveal-on-scroll">
+                    <h3 id="ui-manifesto-title" class="font-cinzel text-hozon-gold text-4xl tracking-widest font-bold">HO ZON</h3>
+                    <p id="ui-manifesto-sub" class="font-serif italic text-hozon-ivory text-xl md:text-2xl font-light">Sang Hidup yang menyatakan diri.</p>
+                    <div class="w-12 h-[1px] bg-hozon-gold/40 mx-auto"></div>
+                    <p id="manifesto-paragraph" class="text-hozon-ivory/70 font-light text-md md:text-lg leading-relaxed font-spectral max-w-2xl mx-auto" style="text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+                        Segala kehidupan, kasih, roh, terang, firman, dan kesatuan menemukan asal dan maknanya di dalam <span class="text-hozon-gold font-semibold">Ho Zon</span>.
+                    </p>
+                </div>
+
+                <!-- Grid Split: Map (Left) and Detail (Right) -->
+                <div id="concept-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-start">
+                    
+                    <!-- Left Column: Map -->
+                    <div id="map-column" class="lg:col-span-12 lg:sticky lg:top-28 space-y-8">
+
+                <!-- Interactive SVG Concept Network Map (Mystical Floating Version) -->
+                <div id="network-map-container" class="border border-hozon-border bg-hozon-card/30 p-8 rounded-lg relative overflow-hidden flex flex-col items-center justify-center min-h-[50px]" style="background: url('nebula.png') center/cover no-repeat, #040d0a;">
+                    
+                    <!-- Abstract Cosmic Nebula Background (overlay) -->
+                    <div class="cosmic-nebula">
+                        <div class="nebula-orb orb-1"></div>
+                        <div class="nebula-orb orb-2"></div>
+                        <div class="nebula-orb orb-3"></div>
+                    </div>
+
+                    <!-- Floating Cosmic Particles Canvas -->
+                    <canvas id="cosmic-particles-canvas" class="absolute inset-0 pointer-events-none z-10 w-full h-full"></canvas>
+
+                    <!-- SVG backing: Pulsating center, rays, text-path circle, connections & lightning -->
+                    <div class="w-full max-w-4xl aspect-[800/400] relative">
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <!-- Glowing filters -->
+                                <filter id="glow-gold" x="-30%" y="-30%" width="160%" height="160%">
+                                    <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+
+                                <!-- Text paths for circular wrapping around Ho Zon -->
+                                <path id="circlePath" d="M 400,200 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" fill="transparent" />
+                                <path id="circlePathInner" d="M 400,200 m -62,0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="transparent" />
+                                <!-- Glow filter for lightning -->
+                                <filter id="glow-lightning" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="6" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+
+                                <!-- Fading linear gradients for beams (rays) -->
+                                <linearGradient id="rayGradVert" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#d4af37" stop-opacity="0.8" />
+                                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="rayGradHoriz" x1="100%" y1="0%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#d4af37" stop-opacity="0.8" />
+                                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="rayGradDiag1" x1="100%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#d4af37" stop-opacity="0.8" />
+                                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="rayGradDiag2" x1="100%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#d4af37" stop-opacity="0.8" />
+                                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+                                </linearGradient>
+
+                                <!-- Radial gradient for glowing tip at beam endpoint -->
+                                <radialGradient id="tipGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+                                    <stop offset="30%" stop-color="#d4af37" stop-opacity="0.9" />
+                                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+                                </radialGradient>
+                            </defs>
+
+                            <!-- Concentric rings group (expandable on click) -->
+                            <g id="sacred-orbit-group" class="transition-all duration-[1500ms] ease-in-out" style="transform-origin: 400px 200px;">
+                                <!-- Pulsating concentric background rings (memancar) -->
+                                <circle cx="400" cy="200" r="105" class="stroke-hozon-gold/10 fill-transparent stroke-[1px] animate-[pulse_6s_ease-in-out_infinite]" />
+                                <circle cx="400" cy="200" r="85" class="stroke-hozon-gold/25 fill-transparent stroke-[1px] animate-[pulse_4s_ease-in-out_infinite_1s]" />
+                                <circle cx="400" cy="200" r="70" class="stroke-hozon-gold/40 fill-transparent stroke-[1.5px] animate-[pulse_3s_ease-in-out_infinite]" filter="url(#glow-gold)" />
+
+                                <!-- Beams/Rays of light emitting from Center (Memancar) -->
+                                <g class="opacity-25">
+                                    <line x1="400" y1="200" x2="400" y2="90" stroke="url(#rayGradVert)" stroke-width="1.5" class="animate-pulse" />
+                                    <line x1="400" y1="200" x2="400" y2="310" stroke="url(#rayGradVert)" stroke-width="1.5" class="animate-pulse" />
+                                    <line x1="400" y1="200" x2="290" y2="200" stroke="url(#rayGradHoriz)" stroke-width="1.5" class="animate-pulse" />
+                                    <line x1="400" y1="200" x2="510" y2="200" stroke="url(#rayGradHoriz)" stroke-width="1.5" class="animate-pulse" />
+                                    <!-- Diagonals -->
+                                    <line x1="400" y1="200" x2="320" y2="120" stroke="url(#rayGradDiag1)" stroke-width="1" class="animate-pulse" />
+                                    <line x1="400" y1="200" x2="480" y2="280" stroke="url(#rayGradDiag1)" stroke-width="1" class="animate-pulse" />
+                                    <line x1="400" y1="200" x2="320" y2="280" stroke="url(#rayGradDiag2)" stroke-width="1" class="animate-pulse" />
+                                    <line x1="400" y1="200" x2="480" y2="120" stroke="url(#rayGradDiag2)" stroke-width="1" class="animate-pulse" />
+                                </g>
+
+                                <!-- Sacred Orbit Text: ECHAD • QADOSH (outer ring, rotating) -->
+                                <g class="animate-[spin_40s_linear_infinite]" style="transform-origin: 400px 200px;">
+                                    <text class="fill-hozon-gold/75 text-[7px] tracking-[0.15em] font-cinzel font-bold">
+                                        <textPath href="#circlePath" startOffset="0%">ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH •</textPath>
+                                    </text>
+                                </g>
+                                <!-- Inner ring (counter-rotating) -->
+                                <g class="spin-reverse">
+                                    <text class="fill-hozon-gold/50 text-[6px] tracking-[0.12em] font-cinzel font-bold">
+                                        <textPath href="#circlePathInner" startOffset="0%">QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD • QADOSH • ECHAD •</textPath>
+                                    </text>
+                                </g>
+                            </g>
+
+
+
+                            <!-- Minimalist connection beams: clean white line, glowing radial tip, no SVG filters -->
+                            <g id="lightning-zoe" class="lightning-beam"><line x1="372" y1="172" x2="210" y2="95" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="210" cy="95" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-agape" class="lightning-beam"><line x1="400" y1="160" x2="400" y2="90" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="400" cy="90" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-pneuma" class="lightning-beam"><line x1="428" y1="172" x2="590" y2="100" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="590" cy="100" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-doxa" class="lightning-beam"><line x1="440" y1="200" x2="640" y2="200" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="640" cy="200" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-phos" class="lightning-beam"><line x1="428" y1="228" x2="600" y2="290" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="600" cy="290" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-logos" class="lightning-beam"><line x1="400" y1="240" x2="400" y2="320" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="400" cy="320" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-hodos" class="lightning-beam"><line x1="372" y1="228" x2="210" y2="290" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="210" cy="290" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                            <g id="lightning-aletheia" class="lightning-beam"><line x1="360" y1="200" x2="190" y2="200" stroke="#ffffff" stroke-width="1.2" opacity="0.7"/><circle cx="190" cy="200" r="8" fill="url(#tipGlow)" class="animate-pulse"/></g>
+                        </svg>
+
+                        <!-- Center Node: Ho Zon (Cosmic golden core) -->
+                        <button onclick="toggleCenterNode()" onmouseenter="hoverConcept('hozon')" onmouseleave="unhoverConcept()" id="node-hozon" class="pulse-node absolute -translate-x-1/2 -translate-y-1/2 border-[3px] border-hozon-gold rounded-full w-[10%] h-[20%] flex flex-col items-center justify-center transition-all duration-[1500ms] z-30 shadow-[0_0_20px_rgba(212,175,55,0.4)]" style="left: 50%; top: 50%; background: transparent;">
+                            <svg viewBox="0 0 100 100" class="w-full h-full absolute inset-0 pointer-events-none drop-shadow-md">
+                                <text id="center-node-title" x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="white" class="font-cinzel font-bold tracking-widest" style="text-shadow: 0 0 8px rgba(212,175,55,0.8);">HO ZON</text>
+                                <text id="center-node-subtitle" x="50" y="70" text-anchor="middle" dominant-baseline="middle" font-size="8" fill="rgba(255,255,255,0.7)" class="font-sans uppercase tracking-widest"></text>
+                            </svg>
+                        </button>
+
+                        <!-- Surrounding Floating Nodes (No borders/boxes, raw elegant fonts, custom drifting animations) -->
+                        
+                        <!-- Zoe (Top Left) -->
+                        <button onclick="selectConcept('zoe')" onmouseenter="hoverConcept('zoe')" onmouseleave="unhoverConcept()" id="node-zoe" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-1" style="left: 20%; top: 22%;">
+                            <span class="font-spectral font-light italic text-hozon-gold group-hover:text-hozon-goldText text-2xl tracking-wide block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Zoe</span>
+                            <span id="sublabel-zoe" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Hidup Kekal</span>
+                        </button>
+
+                        <!-- Agape (Top Center) -->
+                        <button onclick="selectConcept('agape')" onmouseenter="hoverConcept('agape')" onmouseleave="unhoverConcept()" id="node-agape" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-2" style="left: 50%; top: 12%;">
+                            <span class="font-spectral font-light italic text-hozon-ivory group-hover:text-hozon-gold text-2xl tracking-wide block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Agape</span>
+                            <span id="sublabel-agape" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Kasih</span>
+                        </button>
+
+                        <!-- Pneuma (Top Right) -->
+                        <button onclick="selectConcept('pneuma')" onmouseenter="hoverConcept('pneuma')" onmouseleave="unhoverConcept()" id="node-pneuma" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-3" style="left: 80%; top: 22%;">
+                            <span class="font-playfair italic font-bold text-hozon-gold group-hover:text-hozon-goldText text-2xl tracking-wide block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Pneuma</span>
+                            <span id="sublabel-pneuma" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Roh</span>
+                        </button>
+
+                        <!-- Doxa (Mid Right) -->
+                        <button onclick="selectConcept('doxa')" onmouseenter="hoverConcept('doxa')" onmouseleave="unhoverConcept()" id="node-doxa" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-4" style="left: 86%; top: 50%;">
+                            <span class="font-playfair italic font-normal text-hozon-ivory group-hover:text-hozon-gold text-2xl tracking-wide block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Doxa</span>
+                            <span id="sublabel-doxa" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Kemuliaan</span>
+                        </button>
+
+                        <!-- Phōs (Bottom Right) -->
+                        <button onclick="selectConcept('phos')" onmouseenter="hoverConcept('phos')" onmouseleave="unhoverConcept()" id="node-phos" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-1" style="left: 80%; top: 78%;">
+                            <span class="font-spectral font-light text-hozon-gold group-hover:text-hozon-goldText text-2xl tracking-widest block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Phōs</span>
+                            <span id="sublabel-phos" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Terang</span>
+                        </button>
+
+                        <!-- Logos (Bottom Center) -->
+                        <button onclick="selectConcept('logos')" onmouseenter="hoverConcept('logos')" onmouseleave="unhoverConcept()" id="node-logos" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-2" style="left: 50%; top: 88%;">
+                            <span class="font-spectral font-light italic text-hozon-ivory group-hover:text-hozon-gold text-2xl tracking-wide block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Logos</span>
+                            <span id="sublabel-logos" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Firman</span>
+                        </button>
+
+                        <!-- Hodos (Bottom Left) -->
+                        <button onclick="selectConcept('hodos')" onmouseenter="hoverConcept('hodos')" onmouseleave="unhoverConcept()" id="node-hodos" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-3" style="left: 20%; top: 78%;">
+                            <span class="font-playfair font-normal italic text-hozon-gold group-hover:text-hozon-goldText text-2xl tracking-wide block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Hodos</span>
+                            <span id="sublabel-hodos" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Jalan</span>
+                        </button>
+
+                        <!-- Alētheia (Mid Left) -->
+                        <button onclick="selectConcept('aletheia')" onmouseenter="hoverConcept('aletheia')" onmouseleave="unhoverConcept()" id="node-aletheia" class="group absolute -translate-x-1/2 -translate-y-1/2 floating-concept-node hover:scale-110 z-20 animate-float-4" style="left: 14%; top: 50%;">
+                            <span class="font-serif font-light text-hozon-ivory group-hover:text-hozon-gold text-xl tracking-[0.15em] block transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Alētheia</span>
+                            <span id="sublabel-aletheia" class="text-[9px] text-hozon-ivoryMuted tracking-[0.2em] font-sans block mt-0.5 uppercase transition-all duration-300 group-hover:text-hozon-gold">Kebenaran</span>
+                        </button>
+
+                    </div>
+                </div>
+                
+                <!-- Elegant animated hover poetic text display (Moved below map, hidden by default) -->
+                <div id="hover-poetic-container" class="opacity-0 h-auto min-h-[72px] flex flex-col justify-center transition-all duration-300 ease-in-out border border-hozon-border/30 bg-hozon-card/30 rounded px-6 max-w-xl mx-auto py-3 mt-4 text-center">
+                    <p id="hover-title" class="text-hozon-gold font-cinzel text-sm tracking-[0.2em] uppercase transition-all duration-300"></p>
+                    <p id="hover-desc" class="text-hozon-ivory/70 font-spectral text-sm mt-1.5 transition-all duration-300 leading-relaxed"></p>
+                </div>
+                
+                </div><!-- end left column -->
+                
+                <!-- SECTION B: CONCEPT DETAIL VIEWER (Right column) -->
+                <div id="view-detail" class="hidden lg:col-span-5 border border-white/5 bg-[#040d0a]/80 backdrop-blur-xl p-8 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] space-y-10 animate-[fadeIn_0.5s_ease_forwards]">
+                    
+                    <!-- Concept Container dynamic inject -->
+                    <div id="concept-content-area" class="grid grid-cols-1 gap-12">
+                        <!-- Left and middle col: Concept presentation -->
+                        <div class="space-y-8">
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3">
+                                <span id="detail-category" class="text-hozon-gold font-cinzel text-xs tracking-[0.2em] uppercase font-semibold">KONSEP DASAR</span>
+                            </div>
+                            <h1 id="detail-title" class="font-cinzel text-5xl md:text-6xl text-hozon-ivory font-bold tracking-wide">ZOE</h1>
+                            <p id="detail-tagline" class="font-serif italic text-xl md:text-2xl text-hozon-goldMuted">Apa itu Zoe?</p>
+                        </div>
+
+                        <hr class="border-white/5">
+
+                        <div class="space-y-6">
+                            <h3 id="ui-detail-ontological" class="font-cinzel text-sm tracking-widest text-hozon-gold font-bold">DEFINISI ONTOLOGIS</h3>
+                            <div id="detail-definition" class="text-[#8A8F98] font-light text-md md:text-lg leading-relaxed space-y-4 font-spectral">
+                                <!-- Definisi inject -->
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h3 id="ui-detail-scriptures" class="font-cinzel text-sm tracking-widest text-hozon-gold font-bold">AYAT-AYAT UTAMA</h3>
+                            <div id="detail-scriptures" class="space-y-4">
+                                <!-- Ayat inject -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            </section>
+
+            <!-- SECTION C: DIALOGUE & THEOLOGY (THEOLOGICAL EXAMINATIONS) -->
+            <section id="view-dialogue" class="hidden space-y-12 animate-[fadeIn_0.5s_ease_forwards]">
+                <div class="max-w-3xl space-y-4 reveal-on-scroll">
+                    <span id="ui-section-dialogue-label" class="text-hozon-gold font-cinzel text-xs tracking-[0.2em] uppercase font-semibold">DIALECTIC & THEOLOGY</span>
+                    <h1 id="ui-section-dialogue-title" class="font-cinzel text-4xl md:text-5xl text-hozon-ivory font-bold">Dialogue & Theology</h1>
+                    <p id="ui-section-dialogue-desc" class="text-hozon-ivory/90 font-light text-lg font-spectral leading-relaxed">
+                        Di sini, perdebatan teologi klasik (seperti dogma Trinitas, Unitarianisme, Kristologi, dll.) diletakkan sebagai diskursus dialogis untuk memahami Sang Hidup (<span class="italic font-serif text-hozon-gold">Ho Zon</span>). Pengunjung diajak menggali sejarah pemikiran teologis bukan untuk sekadar memihak kelompok dogma, tetapi untuk menembus ke dalam realitas ontologis Ho Zon.
+                    </p>
+                </div>
+
+                <hr class="border-hozon-border">
+
+                <div id="dialogue-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Dialogue items inject here -->
+                </div>
+            </section>
+
+            <!-- SECTION D: STUDIES (ENSYKLOPEDIA KONSEPTUAL) -->
+            <section id="view-studies" class="hidden space-y-12 animate-[fadeIn_0.5s_ease_forwards]">
+                <div class="max-w-3xl space-y-4 reveal-on-scroll">
+                    <span id="ui-section-studies-label" class="text-hozon-gold font-cinzel text-xs tracking-[0.2em] uppercase font-semibold">ENSYKLOPEDIA KONSEPTUAL</span>
+                    <h1 id="ui-section-studies-title" class="font-cinzel text-4xl md:text-5xl text-hozon-ivory font-bold">Studi & Kajian</h1>
+                    <p id="ui-section-studies-desc" class="text-hozon-ivory/90 font-light text-lg font-spectral leading-relaxed">
+                        Pendekatan terstruktur untuk menjelajahi konsep secara mendalam. Di bawah ini adalah modul-modul studi yang mengaitkan teks Alkitab asli, sejarah linguistik, dan pemikiran filsafat kuno untuk merumuskan pengertian <span class="text-hozon-gold font-medium font-cinzel">Ho Zon</span> yang jernih.
+                    </p>
+                </div>
+
+                <hr class="border-hozon-border">
+
+                <div id="studies-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Studies category boxes inject here -->
+                </div>
+            </section>
+
+            <!-- SECTION E: LIBRARY (PERPUSTAKAAN DOKUMEN & TEKS) -->
+            <section id="view-library" class="hidden space-y-12 animate-[fadeIn_0.5s_ease_forwards]">
+                <div class="max-w-3xl space-y-4 reveal-on-scroll">
+                    <span id="ui-section-library-label" class="text-hozon-gold font-cinzel text-xs tracking-[0.2em] uppercase font-semibold">PORTAL PERPUSTAKAAN</span>
+                    <h1 id="ui-section-library-title" class="font-cinzel text-4xl md:text-5xl text-hozon-ivory font-bold">Library & Manuscript</h1>
+                    <p id="ui-section-library-desc" class="text-hozon-ivory/90 font-light text-lg font-spectral leading-relaxed">
+                        Arsip teks digital, salinan fragmen klasik, manuskrip Alkitab Yunani, dan esai teologi yang relevan untuk mendukung eksplorasi ke dalam makna <span class="text-hozon-gold font-medium">Ho Zon</span>.
+                    </p>
+                </div>
+
+                <hr class="border-hozon-border">
+
+                <div class="space-y-6">
+                    <h3 id="ui-section-library-subtitle" class="font-cinzel text-xs tracking-widest text-hozon-gold font-bold">MANUSKRIP KLASIK TERSEDIA</h3>
+                    <div id="library-container" class="divide-y divide-hozon-border border-y border-hozon-border">
+                        <!-- Library items inject here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION F: ABOUT (SANG INSIATOR & VISI) -->
+            <section id="view-about" class="hidden space-y-12 animate-[fadeIn_0.5s_ease_forwards]">
+                <div class="max-w-3xl space-y-8">
+                    <div class="space-y-4 reveal-on-scroll">
+                        <span id="ui-section-about-label" class="text-hozon-gold font-cinzel text-xs tracking-[0.2em] uppercase font-semibold">TENTANG PORTAL</span>
+                        <h1 id="ui-section-about-title" class="font-cinzel text-4xl md:text-5xl text-hozon-ivory font-bold">Tentang Ho Zon</h1>
+                    </div>
+
+                    <div id="about-container" class="reveal-on-scroll text-hozon-ivory font-light text-md md:text-lg leading-relaxed space-y-6 font-spectral">
+                        <!-- About content inject here -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- DIALOGUE DETAIL VIEW COMPONENT (Modal / Overlay) -->
+        <div id="dialogue-modal" class="hidden fixed inset-0 z-50 bg-hozon-dark/95 flex items-center justify-center p-6 backdrop-blur-md">
+            <div class="max-w-3xl w-full h-[85vh] flex flex-col justify-between overflow-hidden">
+                <!-- Brand Logo Row (Floats freely above and outside the bordered container) -->
+                <div class="flex items-center gap-3 pb-3 px-1">
+                    <span class="font-cinzel text-2xl tracking-[0.2em] text-hozon-gold font-bold">HO ZON</span>
+                    <span id="ui-modal-header-badge" class="text-[9px] uppercase tracking-[0.3em] px-2 py-0.5 border border-hozon-gold/40 rounded-full text-hozon-gold font-sans font-semibold">Sang Hidup</span>
+                </div>
+
+                <!-- The Gold-Bordered Container Box (Category, Title, Body, Footer) -->
+                <div id="modal-container" class="flex-grow bg-hozon-card border border-hozon-gold/30 rounded flex flex-col justify-between overflow-hidden shadow-2xl relative">
+                    <!-- Reading Progress Bar -->
+                    <div id="modal-progress-bar" class="absolute top-0 left-0 h-[3px] bg-gradient-to-r from-hozon-goldMuted via-hozon-gold to-hozon-goldMuted w-0 z-50 transition-[width] duration-75"></div>
+                    <!-- Modal Header (Now starts inside the border) -->
+                    <div id="modal-header" class="p-6 border-b border-hozon-border flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-hozon-dark/40">
+                        <div class="flex flex-col">
+                            <span id="modal-category" class="text-hozon-goldMuted font-cinzel text-[10px] tracking-[0.2em] uppercase font-semibold">DIALOGUE DISKURSUS</span>
+                            <h2 id="modal-title" class="font-cinzel text-2xl text-hozon-ivory font-bold mt-1">Formulasi Trinitarian</h2>
+                        </div>
+                        <!-- Modal Theme Switcher -->
+                        <div class="modal-theme-toggle-bg flex items-center gap-1 border border-hozon-border/40 bg-[#040d0a]/60 p-0.5 rounded-full text-[9px] font-cinzel tracking-wider">
+                            <button id="modal-theme-dark-btn" onclick="setModalTheme('dark')" class="modal-theme-btn-active px-3 py-1.5 rounded-full transition-all bg-hozon-gold text-[#010504] font-bold">DARK</button>
+                            <button id="modal-theme-parchment-btn" onclick="setModalTheme('parchment')" class="modal-theme-btn-inactive px-3 py-1.5 rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold">PARCHMENT</button>
+                        </div>
+                    </div>
+                    <!-- Modal Body -->
+                    <div id="modal-body" class="p-8 overflow-y-auto space-y-6 font-spectral text-hozon-ivory leading-relaxed font-light text-md md:text-lg flex-grow">
+                        <!-- Dialogue detail content inject -->
+                    </div>
+                    <!-- Modal Footer -->
+                    <div id="modal-footer" class="p-6 border-t border-hozon-border bg-hozon-dark/40 flex justify-between items-center text-xs font-cinzel">
+                        <span id="modal-footer-text" class="text-hozon-ivoryMuted">HO ZON — DIALOGUE DISCOURSE</span>
+                        <button id="modal-footer-btn" onclick="closeDialogueModal()" class="px-5 py-2 border border-hozon-border hover:border-hozon-gold text-hozon-gold rounded">TUTUP DISKURSUS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer of Page -->
+    <footer class="relative z-10 border-t border-hozon-border bg-hozon-dark py-8 px-6 text-center text-hozon-ivoryMuted font-sans text-xs tracking-wider">
+        <div class="max-w-7xl mx-auto flex justify-center items-center">
+            <p id="ui-footer">&copy; 2026 HO ZON. All Rights Reserved. Sang Hidup yang Menyatakan Diri.</p>
+        </div>
+    </footer>
+
+    <!-- ──────────────────────────────────────────────────────── -->
+    <!-- JAVASCRIPT STATE MANAGEMENT & DATABASE                   -->
+    <!-- ──────────────────────────────────────────────────────── -->
+    <!-- Compiled Markdown Content (Single Source of Truth) -->
+    <script src="content/compiled_content.js"></script>
+    <script>
+        // ── i18n Translation Dictionary ──
+        const I18N = {
+            id: {
+                subtitle: "Sang Hidup",
+                landing_line1: "Pada mulanya bukan konsep.",
+                landing_line2: "Pada mulanya adalah Sang Hidup.",
+                enter_btn: "ENTER THE ONTOLOGY",
+                header_badge: "Sang Hidup",
+                nav_concepts: "CONCEPTS",
+                nav_studies: "STUDIES",
+                nav_dialogue: "DIALOGUE",
+                nav_library: "LIBRARY",
+                nav_about: "ABOUT",
+                manifesto_sub: "Sang Hidup yang menyatakan diri.",
+                manifesto_body: "Segala kehidupan, kasih, roh, terang, firman, dan kesatuan menemukan asal dan maknanya di dalam <span class=\"text-hozon-gold font-semibold\">Ho Zon</span>.",
+                node_zoe: "Hidup Kekal",
+                node_agape: "Kasih",
+                node_pneuma: "Roh",
+                node_doxa: "Kemuliaan",
+                node_phos: "Terang",
+                node_logos: "Firman",
+                node_hodos: "Jalan",
+                node_aletheia: "Kebenaran",
+                hover_default_title: "JELAJAHI JARINGAN KONSEPTUAL",
+                hover_default_desc: "Dekatkan kursor atau sentuh konsep untuk melihat pancaran relasinya dengan Ho Zon.",
+                detail_ontological: "DEFINISI ONTOLOGIS",
+                detail_scriptures: "AYAT-AYAT UTAMA",
+                section_studies_label: "ENSYKLOPEDIA KONSEPTUAL",
+                section_studies_title: "Studi & Kajian",
+                section_studies_desc: "Pendekatan terstruktur untuk menjelajahi konsep secara mendalam — modul studi yang mengaitkan teks Alkitab asli, sejarah linguistik, dan pemikiran filsafat kuno untuk merumuskan pengertian <span class=\"text-hozon-gold font-medium font-cinzel\">Ho Zon</span> yang jernih. Kajian dikelompokkan per konsep: arahkan kursor (atau ketuk di layar sentuh) ke sebuah kotak untuk melihat daftar kajian di dalamnya.",
+                study_soon: "Segera",
+                study_count_label: "kajian",
+                study_count_label_one: "kajian",
+                section_dialogue_label: "DIALECTIC & THEOLOGY",
+                section_dialogue_title: "Dialogue & Theology",
+                section_dialogue_desc: "Di sini, perdebatan teologi klasik (seperti dogma Trinitas, Unitarianisme, Kristologi, dll.) diletakkan sebagai diskursus dialogis untuk memahami Sang Hidup (<span class=\"italic font-serif text-hozon-gold\">Ho Zon</span>). Pengunjung diajak menggali sejarah pemikiran teologis bukan untuk sekadar memihak kelompok dogma, tetapi untuk menembus ke dalam realitas ontologis Ho Zon.",
+                section_library_label: "PORTAL PERPUSTAKAAN",
+                section_library_title: "Library & Manuscript",
+                section_library_desc: "Arsip teks digital, salinan fragmen klasik, manuskrip Alkitab Yunani, dan esai teologi yang relevan untuk mendukung eksplorasi ke dalam makna <span class=\"text-hozon-gold font-medium\">Ho Zon</span>.",
+                section_library_subtitle: "MANUSKRIP KLASIK TERSEDIA",
+                section_about_label: "TENTANG PORTAL",
+                section_about_title: "Tentang Ho Zon",
+                btn_read_dialogue: "BACA DIALOGUE",
+                btn_start_study: "MULAI BELAJAR",
+                btn_open_doc: "BUKA DOKUMEN",
+                modal_category_dialogue: "Dialogue Diskursus",
+                modal_category_studies: "Studi & Kajian",
+                modal_category_library: "Manuskrip Perpustakaan",
+                modal_footer_dialogue: "HO ZON — DIALOGUE DISCOURSE",
+                modal_footer_studies: "HO ZON — STUDIES & ANALYSIS",
+                modal_footer_library: "HO ZON — LIBRARY ARCHIVE",
+                modal_btn_close: "TUTUP DISKURSUS",
+                modal_btn_close_study: "TUTUP KAJIAN",
+                modal_btn_close_doc: "TUTUP DOKUMEN",
+                modal_loading_title: "Menggali Manuskrip...",
+                modal_loading_desc: "Membuka lembaran teologi abisal...",
+                modal_error_title: "Kesalahan Memuat",
+                footer: "&copy; 2026 HO ZON. All Rights Reserved. Sang Hidup yang Menyatakan Diri.",
+                christos_subtitle: "Mesias/Kristus",
+                origin_subtitle: "Origin",
+                fallback_badge: ""
+            },
+            en: {
+                subtitle: "The Living One",
+                landing_line1: "In the beginning, it was not a concept.",
+                landing_line2: "In the beginning, there was The Living One.",
+                enter_btn: "ENTER THE ONTOLOGY",
+                header_badge: "The Living One",
+                nav_concepts: "CONCEPTS",
+                nav_studies: "STUDIES",
+                nav_dialogue: "DIALOGUE",
+                nav_library: "LIBRARY",
+                nav_about: "ABOUT",
+                manifesto_sub: "The Living One who reveals Himself.",
+                manifesto_body: "All life, love, spirit, light, word, and unity find their origin and meaning in <span class=\"text-hozon-gold font-semibold\">Ho Zon</span>.",
+                node_zoe: "Eternal Life",
+                node_agape: "Love",
+                node_pneuma: "Spirit",
+                node_doxa: "Glory",
+                node_phos: "Light",
+                node_logos: "The Word",
+                node_hodos: "The Way",
+                node_aletheia: "Truth",
+                hover_default_title: "EXPLORE THE CONCEPTUAL NETWORK",
+                hover_default_desc: "Hover over or tap a concept to see its radiant connection to Ho Zon.",
+                detail_ontological: "ONTOLOGICAL DEFINITION",
+                detail_scriptures: "KEY SCRIPTURES",
+                section_studies_label: "CONCEPTUAL ENCYCLOPEDIA",
+                section_studies_title: "Studies & Research",
+                section_studies_desc: "A structured approach to explore concepts deeply — study modules linking original Biblical texts, linguistic history, and ancient philosophy to formulate a clear understanding of <span class=\"text-hozon-gold font-medium font-cinzel\">Ho Zon</span>. Studies are grouped by concept: hover (or tap on touch screens) a box to reveal the studies inside it.",
+                study_soon: "Soon",
+                study_count_label: "studies",
+                study_count_label_one: "study",
+                section_dialogue_label: "DIALECTIC & THEOLOGY",
+                section_dialogue_title: "Dialogue & Theology",
+                section_dialogue_desc: "Here, classical theological debates (such as the dogma of the Trinity, Unitarianism, Christology, etc.) are framed as dialogical discourse to understand The Living One (<span class=\"italic font-serif text-hozon-gold\">Ho Zon</span>). Visitors are invited to explore theological thought not to side with dogmatic factions, but to penetrate into the ontological reality of Ho Zon.",
+                section_library_label: "LIBRARY PORTAL",
+                section_library_title: "Library & Manuscript",
+                section_library_desc: "Archives of digital texts, classical fragment copies, Greek Biblical manuscripts, and relevant theological essays to support the exploration of the meaning of <span class=\"text-hozon-gold font-medium\">Ho Zon</span>.",
+                section_library_subtitle: "CLASSICAL MANUSCRIPTS AVAILABLE",
+                section_about_label: "ABOUT THE PORTAL",
+                section_about_title: "About Ho Zon",
+                btn_read_dialogue: "READ DIALOGUE",
+                btn_start_study: "START STUDYING",
+                btn_open_doc: "OPEN DOCUMENT",
+                modal_category_dialogue: "Dialogue Discourse",
+                modal_category_studies: "Studies & Analysis",
+                modal_category_library: "Library Manuscript",
+                modal_footer_dialogue: "HO ZON — DIALOGUE DISCOURSE",
+                modal_footer_studies: "HO ZON — STUDIES & ANALYSIS",
+                modal_footer_library: "HO ZON — LIBRARY ARCHIVE",
+                modal_btn_close: "CLOSE DISCOURSE",
+                modal_btn_close_study: "CLOSE STUDY",
+                modal_btn_close_doc: "CLOSE DOCUMENT",
+                modal_loading_title: "Unearthing Manuscript...",
+                modal_loading_desc: "Opening abyssal theology pages...",
+                modal_error_title: "Loading Error",
+                footer: "&copy; 2026 HO ZON. All Rights Reserved. The Living One who Reveals Himself.",
+                christos_subtitle: "Messiah/Christ",
+                origin_subtitle: "Origin",
+                fallback_badge: "English translation in progress. Showing Indonesian."
+            }
+        };
+
+        let activeConceptKey = null;
+        let currentLang = 'id';
+
+        function initLanguage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            const storedLang = localStorage.getItem('hozon_lang');
+            // Default mengikuti bahasa browser: Indonesia → id, selain itu → en.
+            // Urutan prioritas: ?lang= → pilihan tersimpan → bahasa browser.
+            const browserLang = (navigator.language || '').toLowerCase().startsWith('id') ? 'id' : 'en';
+            let targetLang = urlLang || storedLang || browserLang;
+            if (!['id', 'en'].includes(targetLang)) targetLang = browserLang;
+            
+            setLanguage(targetLang);
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('hozon_lang', lang);
+            
+            // Update html lang attribute
+            document.documentElement.lang = lang;
+            
+            applyLanguageUI();
+        }
+
+        function t(key) {
+            return I18N[currentLang]?.[key] || I18N['id'][key] || key;
+        }
+
+        function getLangData() {
+            return SITE_DATA[currentLang] || SITE_DATA['id'];
+        }
+
+        function applyLanguageUI() {
+            // Update language switcher buttons state (Landing Page)
+            const idBtn = document.getElementById('lang-id-btn');
+            const enBtn = document.getElementById('lang-en-btn');
+            if (idBtn && enBtn) {
+                if (currentLang === 'id') {
+                    idBtn.className = "w-[28px] h-[28px] flex items-center justify-center text-[10px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]";
+                    enBtn.className = "w-[28px] h-[28px] flex items-center justify-center text-[10px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                } else {
+                    enBtn.className = "w-[28px] h-[28px] flex items-center justify-center text-[10px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]";
+                    idBtn.className = "w-[28px] h-[28px] flex items-center justify-center text-[10px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                }
+            }
+
+            // Update language switcher buttons state (Workspace Header)
+            const headerIdBtn = document.getElementById('header-lang-id-btn');
+            const headerEnBtn = document.getElementById('header-lang-en-btn');
+            if (headerIdBtn && headerEnBtn) {
+                if (currentLang === 'id') {
+                    headerIdBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]";
+                    headerEnBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                } else {
+                    headerEnBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]";
+                    headerIdBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                }
+            }
+
+            // Update language switcher buttons state (Mobile Menu)
+            const mobileIdBtn = document.getElementById('mobile-lang-id-btn');
+            const mobileEnBtn = document.getElementById('mobile-lang-en-btn');
+            if (mobileIdBtn && mobileEnBtn) {
+                if (currentLang === 'id') {
+                    mobileIdBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]";
+                    mobileEnBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                } else {
+                    mobileEnBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel font-bold tracking-wider rounded-full transition-all bg-hozon-gold text-[#010504]";
+                    mobileIdBtn.className = "w-[26px] h-[26px] flex items-center justify-center text-[9px] font-cinzel tracking-wider rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                }
+            }
+
+            // Update UI elements in DOM
+            const updates = {
+                // Landing hero (subtitle, dua baris "In the beginning…", tombol gateway) sengaja
+                // dwibahasa & statis — tidak ikut di-toggle agar setiap pengunjung paham di layar pertama.
+                'ui-header-badge': t('header_badge'),
+                'ui-modal-header-badge': t('header_badge'),
+                
+                // Nav
+                'nav-concepts': t('nav_concepts'),
+                'nav-studies': t('nav_studies'),
+                'nav-dialogue': t('nav_dialogue'),
+                'nav-library': t('nav_library'),
+                'nav-about': t('nav_about'),
+                'mobile-nav-concepts': t('nav_concepts'),
+                'mobile-nav-studies': t('nav_studies'),
+                'mobile-nav-dialogue': t('nav_dialogue'),
+                'mobile-nav-library': t('nav_library'),
+                'mobile-nav-about': t('nav_about'),
+                
+                // Manifesto
+                'ui-manifesto-sub': t('manifesto_sub'),
+                'manifesto-paragraph': t('manifesto_body'),
+                
+                // Sublabels
+                'sublabel-zoe': t('node_zoe'),
+                'sublabel-agape': t('node_agape'),
+                'sublabel-pneuma': t('node_pneuma'),
+                'sublabel-doxa': t('node_doxa'),
+                'sublabel-phos': t('node_phos'),
+                'sublabel-logos': t('node_logos'),
+                'sublabel-hodos': t('node_hodos'),
+                'sublabel-aletheia': t('node_aletheia'),
+                
+                // Detail ontological headers
+                'ui-detail-ontological': t('detail_ontological'),
+                'ui-detail-scriptures': t('detail_scriptures'),
+                
+                // Section views
+                'ui-section-dialogue-label': t('section_dialogue_label'),
+                'ui-section-dialogue-title': t('section_dialogue_title'),
+                'ui-section-dialogue-desc': t('section_dialogue_desc'),
+                
+                'ui-section-studies-label': t('section_studies_label'),
+                'ui-section-studies-title': t('section_studies_title'),
+                'ui-section-studies-desc': t('section_studies_desc'),
+                
+                'ui-section-library-label': t('section_library_label'),
+                'ui-section-library-title': t('section_library_title'),
+                'ui-section-library-desc': t('section_library_desc'),
+                'ui-section-library-subtitle': t('section_library_subtitle'),
+                
+                'ui-section-about-label': t('section_about_label'),
+                'ui-section-about-title': t('section_about_title'),
+                
+                'ui-footer': t('footer')
+            };
+
+            for (const [id, value] of Object.entries(updates)) {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = value;
+            }
+
+            // Re-render dynamic components
+            initDynamicContent();
+            
+            // Re-render active concept if any is opened
+            if (activeConceptKey) {
+                selectConcept(activeConceptKey);
+            } else {
+                updatePoeticSubtitle('default');
+            }
+            
+            // Re-render center node text based on collapse state
+            const titleEl = document.getElementById('center-node-title');
+            const subtitleEl = document.getElementById('center-node-subtitle');
+            if (isHozonCollapsed) {
+                if (titleEl) titleEl.textContent = 'CHRISTOS';
+                if (subtitleEl) subtitleEl.textContent = t('christos_subtitle');
+            } else {
+                if (titleEl) titleEl.textContent = 'HO ZON';
+                if (subtitleEl) subtitleEl.textContent = t('origin_subtitle');
+            }
+            
+            lucide.createIcons();
+        }
+
+        function enterHozonPortal() {
+            // Play ambient music on entering portal to satisfy browser user gesture requirements
+            const audioEl = document.getElementById('ambient-audio');
+            const musicIcon = document.getElementById('music-icon');
+            if (audioEl) {
+                audioEl.play().then(() => {
+                    isMusicPlaying = true;
+                    if (musicIcon) {
+                        musicIcon.setAttribute('data-lucide', 'pause');
+                    }
+                    lucide.createIcons(); // Re-trigger Lucide to show the pause icon
+                }).catch(err => {
+                    console.log("Audio autoplay prevented on enter:", err);
+                });
+            }
+
+            const landing = document.getElementById('screen-landing');
+            const workspace = document.getElementById('screen-workspace');
+            const overlay = document.getElementById('transition-overlay');
+            
+            // 1. Fade in the cinematic dark overlay
+            overlay.classList.remove('opacity-0');
+            overlay.classList.add('opacity-100');
+            
+            // 2. Wait for the overlay to fully cover the screen (500ms duration)
+            setTimeout(() => {
+                // Swap the screens behind the dark curtain
+                landing.classList.add('hidden');
+                workspace.classList.remove('hidden');
+                workspace.classList.add('opacity-100'); // Ensure workspace is fully visible
+                
+                lucide.createIcons(); // Re-initialize icons inside workspace
+                window.scrollTo(0, 0); // Ensure scroll is at the top for the new page
+                
+                // 3. Fade the overlay back out to reveal the ontology map smoothly
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-100');
+                    overlay.classList.add('opacity-0');
+                }, 50);
+            }, 500);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function resetNavClasses() {
+            const navs = ['nav-concepts', 'nav-studies', 'nav-dialogue', 'nav-library', 'nav-about'];
+            navs.forEach(n => {
+                const el = document.getElementById(n);
+                if (el) {
+                    el.classList.remove('text-hozon-gold', 'border-b', 'border-hozon-gold');
+                    el.classList.add('text-hozon-ivoryMuted');
+                }
+            });
+        }
+
+        function showSection(sectionId, navId) {
+            const sections = ['view-dashboard', 'view-dialogue', 'view-studies', 'view-library', 'view-about'];
+            
+            let activeSection = null;
+            sections.forEach(s => {
+                const el = document.getElementById(s);
+                if (el && !el.classList.contains('hidden')) {
+                    activeSection = el;
+                }
+            });
+
+            resetNavClasses();
+            if (navId) {
+                const navEl = document.getElementById(navId);
+                if (navEl) {
+                    navEl.classList.remove('text-hozon-ivoryMuted');
+                    navEl.classList.add('text-hozon-gold', 'border-b', 'border-hozon-gold');
+                }
+            }
+
+            function performSwap() {
+                if (sectionId === 'view-dashboard') {
+                    document.body.classList.remove('ambient-bg');
+                    document.body.classList.add('bg-[#010504]');
+                } else {
+                    document.body.classList.remove('bg-[#010504]');
+                    document.body.classList.add('ambient-bg');
+                }
+
+                sections.forEach(s => {
+                    const el = document.getElementById(s);
+                    if (el) {
+                        el.classList.add('hidden');
+                        el.classList.remove('section-fade', 'section-fade-active');
+                    }
+                });
+
+                const targetEl = document.getElementById(sectionId);
+                if (targetEl) {
+                    targetEl.classList.remove('hidden');
+                    targetEl.classList.add('section-fade');
+                    targetEl.offsetHeight; 
+                    targetEl.classList.add('section-fade-active');
+                }
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            if (activeSection && activeSection.id !== sectionId) {
+                activeSection.classList.add('section-fade');
+                activeSection.offsetHeight;
+                activeSection.classList.remove('section-fade-active');
+                setTimeout(performSwap, 200);
+            } else {
+                performSwap();
+            }
+        }
+
+        function showDashboard() {
+            // Reset map column to full width
+            const mapCol = document.getElementById('map-column');
+            if (mapCol) {
+                mapCol.classList.remove('lg:col-span-7');
+                mapCol.classList.add('lg:col-span-12');
+            }
+            document.getElementById('view-detail').classList.add('hidden');
+            showSection('view-dashboard', 'nav-concepts');
+        }
+
+        function showStudies() {
+            document.getElementById('view-detail').classList.add('hidden');
+            showSection('view-studies', 'nav-studies');
+        }
+
+        function showDialogue() {
+            document.getElementById('view-detail').classList.add('hidden');
+            showSection('view-dialogue', 'nav-dialogue');
+        }
+
+        function showLibrary() {
+            document.getElementById('view-detail').classList.add('hidden');
+            showSection('view-library', 'nav-library');
+        }
+
+        function showAbout() {
+            document.getElementById('view-detail').classList.add('hidden');
+            showSection('view-about', 'nav-about');
+        }
+
+        // Network connections definition
+        const NETWORK_CONNECTIONS = [
+            { id: 'conn-zoe', nodes: ['hozon', 'zoe'] },
+            { id: 'conn-agape', nodes: ['hozon', 'agape'] },
+            { id: 'conn-pneuma', nodes: ['hozon', 'pneuma'] },
+            { id: 'conn-doxa', nodes: ['hozon', 'doxa'] },
+            { id: 'conn-phos', nodes: ['hozon', 'phos'] },
+            { id: 'conn-logos', nodes: ['hozon', 'logos'] },
+            { id: 'conn-hodos', nodes: ['hozon', 'hodos'] },
+            { id: 'conn-aletheia', nodes: ['hozon', 'aletheia'] },
+        ];
+
+        const ALL_CONCEPT_KEYS = ['hozon', 'zoe', 'agape', 'pneuma', 'phos', 'logos', 'doxa', 'aletheia', 'hodos'];
+
+        // Show/hide lightning beams
+        function showLightning(key) {
+            ALL_CONCEPT_KEYS.forEach(k => {
+                const el = document.getElementById(`lightning-${k}`);
+                if (el) el.classList.remove('active');
+            });
+            if (key && key !== 'hozon') {
+                const beam = document.getElementById(`lightning-${key}`);
+                if (beam) beam.classList.add('active');
+            }
+        }
+        function hideAllLightning() {
+            ALL_CONCEPT_KEYS.forEach(k => {
+                const el = document.getElementById(`lightning-${k}`);
+                if (el) el.classList.remove('active');
+            });
+        }
+
+        // Highlight Network Lines and Parent (Ho Zon) on hover / click
+        function highlightNetwork(nodeKey) {
+            const allNodes = ALL_CONCEPT_KEYS;
+            allNodes.forEach(nk => {
+                const el = document.getElementById(`node-${nk}`);
+                if (!el) return;
+
+                if (nk === nodeKey) {
+                    el.style.opacity = '1';
+                    if (nk === 'hozon') {
+                        el.classList.add('shadow-[0_0_25px_rgba(212,175,55,0.6)]');
+                    } else {
+                        el.classList.add('scale-105');
+                        el.style.textShadow = '0 0 15px rgba(212, 175, 55, 0.9), 0 0 5px rgba(255, 255, 255, 0.5)';
+                    }
+                } else if (nk === 'hozon') {
+                    // Center node is always fully opaque & styled in gold when any concept is active
+                    el.style.opacity = '1';
+                } else {
+                    el.style.opacity = '1'; // Do not dim other nodes when clicked, keep them fully readable!
+                    el.classList.remove('scale-105');
+                    el.style.textShadow = '';
+                }
+            });
+        }
+
+        // RE-SET lines to default beautiful forest glow
+        function resetNetworkLines() {
+            const allNodes = ALL_CONCEPT_KEYS;
+            hideAllLightning();
+            allNodes.forEach(nk => {
+                const el = document.getElementById(`node-${nk}`);
+                if (el) {
+                    el.style.opacity = '1';
+                    el.style.textShadow = '';
+                    if (nk === 'hozon') {
+                        el.classList.remove('shadow-[0_0_25px_rgba(212,175,55,0.6)]');
+                    } else {
+                        el.classList.remove('scale-105');
+                    }
+                }
+            });
+        }
+
+        // HOVER SYSTEM: LIGHT UP LINE & PARENT ON HOVER
+        function hoverConcept(key) {
+            if (isHozonCollapsed) return; // Disable outer node hover states when collapsed in Christos view
+            // Highlight nodes
+            const allNodes = ALL_CONCEPT_KEYS;
+            allNodes.forEach(nk => {
+                const el = document.getElementById(`node-${nk}`);
+                if (!el) return;
+
+                if (nk === key) {
+                    // Hovered concept: Fully lit and glowing
+                    el.style.opacity = '1';
+                    if (nk !== 'hozon') {
+                        el.classList.add('scale-105');
+                        el.style.textShadow = '0 0 15px rgba(212, 175, 55, 0.9), 0 0 5px rgba(255, 255, 255, 0.5)';
+                    }
+                } else if (nk === 'hozon') {
+                    // Center Node (Ho Zon) also lights up in sympathy when outer is hovered!
+                    el.style.opacity = '1';
+                    el.classList.add('shadow-[0_0_25px_rgba(212,175,55,0.6)]');
+                } else {
+                    // All other outer nodes: dim down slightly to focus but remain readable (0.6 opacity)
+                    el.style.opacity = '0.6';
+                    el.classList.remove('scale-105');
+                    el.style.textShadow = '';
+                }
+            });
+
+            // Show lightning beam from center to hovered node
+            showLightning(key);
+
+            // Display dynamic poetic definition instantly
+            updatePoeticSubtitle(key);
+        }
+
+        // UNHOVER SYSTEM: RESTORE CLICKED OR DEFAULT STATE
+        function unhoverConcept() {
+            if (activeConceptKey) {
+                highlightNetwork(activeConceptKey);
+                showLightning(activeConceptKey);
+                updatePoeticSubtitle(activeConceptKey);
+            } else {
+                resetNetworkLines();
+                hideAllLightning();
+                updatePoeticSubtitle('default');
+            }
+        }
+
+        // UPDATE THE ELEGANT HOVER POETIC TEXT DISPLAY
+        function updatePoeticSubtitle(key) {
+            const titleEl = document.getElementById('hover-title');
+            const descEl = document.getElementById('hover-desc');
+            const container = document.getElementById('hover-poetic-container');
+            
+            if (!titleEl || !descEl) return;
+
+            // Show container if it was hidden
+            if (container) {
+                container.classList.remove('opacity-0');
+            }
+
+            titleEl.style.opacity = '0';
+            descEl.style.opacity = '0';
+
+            setTimeout(() => {
+                const langData = getLangData();
+                if (!key || key === 'default') {
+                    titleEl.innerText = t('hover_default_title');
+                    descEl.innerHTML = t('hover_default_desc');
+                } else if (langData.concepts[key]) {
+                    titleEl.innerText = langData.concepts[key].title;
+                    descEl.innerHTML = langData.concepts[key].hover_text;
+                }
+                titleEl.style.opacity = '1';
+                descEl.style.opacity = '1';
+            }, 150);
+        }
+
+        // Center transition state variable
+        let isHozonCollapsed = false;
+
+        function toggleCenterNode() {
+            const outerKeys = ['zoe', 'agape', 'pneuma', 'doxa', 'phos', 'logos', 'hodos', 'aletheia'];
+            const centerBtn = document.getElementById('node-hozon');
+            const titleEl = document.getElementById('center-node-title');
+            const subtitleEl = document.getElementById('center-node-subtitle');
+            const orbitGroup = document.getElementById('sacred-orbit-group');
+            
+            if (!isHozonCollapsed) {
+                // Transition to Christos state
+                isHozonCollapsed = true;
+                
+                // 1. Collapse all outer nodes
+                outerKeys.forEach(key => {
+                    const el = document.getElementById(`node-${key}`);
+                    if (el) {
+                        el.classList.add('collapsed-to-center');
+                    }
+                });
+                
+                // 2. Expand center button & orbit
+                if (centerBtn) {
+                    centerBtn.classList.remove('pulse-node');
+                    centerBtn.classList.add('center-node-expanded', 'center-node-expanded-pulse');
+                }
+                if (orbitGroup) {
+                    orbitGroup.classList.add('expanded-orbit');
+                }
+                
+                // 3. Change center text
+                if (titleEl) titleEl.textContent = 'CHRISTOS';
+                if (subtitleEl) subtitleEl.textContent = t('christos_subtitle');
+                
+                // 4. Inject Christos exposition to detail panel below
+                selectConcept('christos');
+            } else {
+                // Transition back to Ho Zon state
+                isHozonCollapsed = false;
+                
+                // 1. Restore all outer nodes
+                outerKeys.forEach(key => {
+                    const el = document.getElementById(`node-${key}`);
+                    if (el) {
+                        el.classList.remove('collapsed-to-center');
+                    }
+                });
+                
+                // 2. Shrink center button & orbit
+                if (centerBtn) {
+                    centerBtn.classList.remove('center-node-expanded', 'center-node-expanded-pulse');
+                    centerBtn.classList.add('pulse-node');
+                }
+                if (orbitGroup) {
+                    orbitGroup.classList.remove('expanded-orbit');
+                }
+                
+                // 3. Restore center text
+                if (titleEl) titleEl.textContent = 'HO ZON';
+                if (subtitleEl) subtitleEl.textContent = t('origin_subtitle');
+                
+                // 4. Display default hozon text in detail panel
+                selectConcept('hozon');
+            }
+        }
+
+        // Concept Selection & Content Injection (OnClick)
+        async function selectConcept(key) {
+            // If clicking outer node while collapsed, expand back to Ho Zon
+            if (isHozonCollapsed && key !== 'christos' && key !== 'hozon') {
+                toggleCenterNode();
+            }
+            // If clicking hozon relation while collapsed, restore center node
+            else if (isHozonCollapsed && key === 'hozon') {
+                toggleCenterNode();
+                return; // toggleCenterNode will trigger the recursive call to selectConcept('hozon')
+            }
+            // If clicking christos relation while expanded, transition center node
+            else if (!isHozonCollapsed && key === 'christos') {
+                toggleCenterNode();
+                return; // toggleCenterNode will trigger the recursive call to selectConcept('christos')
+            }
+            activeConceptKey = key;
+            const langData = getLangData();
+            const data = langData.concepts[key];
+            if (!data) return;
+
+            // Highlight connections instantly
+            highlightNetwork(key);
+
+            // Update content in viewer
+            document.getElementById('detail-title').innerText = data.title ? data.title.replace('HOZON', 'HO ZON') : '';
+            document.getElementById('detail-category').innerText = data.category || '';
+            document.getElementById('detail-tagline').innerText = data.tagline || '';
+            
+            // Load and parse Markdown description from compiled content
+            const definitionEl = document.getElementById('detail-definition');
+            if (data.body) {
+                let bodyHtml = marked.parse(data.body);
+                if (data._fallback && currentLang === 'en') {
+                    bodyHtml = `
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded border border-hozon-gold/25 bg-hozon-gold/5 text-hozon-gold text-xs font-sans">
+                            <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span>${t('fallback_badge')}</span>
+                        </div>
+                    ` + bodyHtml;
+                }
+                definitionEl.innerHTML = bodyHtml;
+            } else {
+                definitionEl.innerHTML = `<p class="text-hozon-gold font-light font-spectral">${currentLang === 'en' ? 'Failed to load concept details.' : 'Gagal memuat detail konsep.'}</p>`;
+            }
+
+            // Inject scriptures
+            let scHtml = '';
+            if (data.scriptures) {
+                data.scriptures.forEach(sc => {
+                    scHtml += `
+                        <div class="border-l-2 border-hozon-gold pl-4 py-1.5 space-y-1 bg-hozon-card/20 rounded-r">
+                            <span class="text-hozon-gold font-cinzel text-xs font-bold tracking-wider">${sc.ref}</span>
+                            <p class="text-hozon-ivoryMuted text-sm font-light italic leading-relaxed font-spectral">"${sc.text}"</p>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('detail-scriptures').innerHTML = scHtml;
+
+            // Display Detail viewer smoothly below network
+            const detailViewer = document.getElementById('view-detail');
+            detailViewer.classList.remove('hidden');
+            
+            // Switch map column to split-screen mode (60% map / 40% detail)
+            const mapCol = document.getElementById('map-column');
+            if (mapCol) {
+                mapCol.classList.remove('lg:col-span-12');
+                mapCol.classList.add('lg:col-span-7');
+            }
+            
+            // Only auto-scroll on mobile/tablet (width < 1024px for lg breakpoint)
+            if (window.innerWidth < 1024) {
+                const headerHeight = 100;
+                const rect = detailViewer.getBoundingClientRect();
+                const scrollTarget = window.scrollY + rect.top - headerHeight;
+                window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+            }
+            
+            lucide.createIcons(); // Re-initialize icons injected dynamically
+        }
+
+        // Dynamic AJAX Content Loader (Shell-to-Content Separation)
+        async function loadContentToModal(category, fileKey) {
+            const modalTitleEl = document.getElementById('modal-title');
+            const modalBodyEl = document.getElementById('modal-body');
+            const categoryLabelEl = document.getElementById('modal-category');
+            const footerTextEl = document.getElementById('modal-footer-text');
+            const footerBtnEl = document.getElementById('modal-footer-btn');
+            
+            // Set loading state with a glowing gold spinner
+            if (categoryLabelEl) categoryLabelEl.innerText = t('modal_category_' + category).toUpperCase();
+            
+            // Update modal footer based on category
+            if (footerTextEl && footerBtnEl) {
+                footerTextEl.innerText = t('modal_footer_' + category);
+                if (category === 'dialogue') {
+                    footerBtnEl.innerText = t('modal_btn_close');
+                } else if (category === 'studies') {
+                    footerBtnEl.innerText = t('modal_btn_close_study');
+                } else if (category === 'library') {
+                    footerBtnEl.innerText = t('modal_btn_close_doc');
+                }
+            }
+
+            modalTitleEl.innerText = t('modal_loading_title');
+            modalBodyEl.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-20 space-y-4">
+                    <div class="w-8 h-8 border-2 border-hozon-gold border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-xs text-hozon-gold tracking-widest uppercase font-cinzel animate-pulse">${t('modal_loading_desc')}</p>
+                </div>
+            `;
+            
+            const modal = document.getElementById('dialogue-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Lock background scroll
+            
+            // Set initial theme to dark
+            setModalTheme('dark');
+            
+            const progressBar = document.getElementById('modal-progress-bar');
+            if (progressBar) progressBar.style.width = '0%';
+            if (modalBodyEl) modalBodyEl.scrollTop = 0;
+            
+            try {
+                let mdText = '';
+                const langData = getLangData();
+                let mdData = null;
+                if (category === 'dialogue') mdData = langData.dialogue[fileKey];
+                else if (category === 'studies') mdData = langData.studies[fileKey];
+                else if (category === 'library') mdData = langData.library[fileKey];
+                
+                if (mdData) {
+                    mdText = mdData.body;
+                }
+                
+                if (!mdText) {
+                    throw new Error(currentLang === 'en' ? `Manuscript page (${fileKey}.md) not found.` : `Lembaran manuskrip (${fileKey}.md) tidak ditemukan.`);
+                }
+                
+                const htmlText = marked.parse(mdText);
+                
+                // Parse HTML text to extract Title and Body
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlText;
+                
+                const h1 = tempDiv.querySelector('h1');
+                const titleText = h1 ? h1.innerText : fileKey.toUpperCase().replace('-', ' ');
+                if (h1) h1.remove(); // Remove redundant title from body
+                
+                modalTitleEl.innerText = titleText;
+                
+                let bodyHtml = tempDiv.innerHTML;
+                if (mdData._fallback && currentLang === 'en') {
+                    bodyHtml = `
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded border border-hozon-gold/25 bg-hozon-gold/5 text-hozon-gold text-xs font-sans">
+                            <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span>${t('fallback_badge')}</span>
+                        </div>
+                    ` + bodyHtml;
+                }
+                modalBodyEl.innerHTML = bodyHtml;
+                
+                lucide.createIcons(); // Re-trigger Lucide icons inside dynamic content
+            } catch (err) {
+                console.error(err);
+                modalTitleEl.innerText = t('modal_error_title');
+                modalBodyEl.innerHTML = `
+                    <div class="text-center py-12 space-y-4">
+                        <i data-lucide="alert-triangle" class="w-12 h-12 text-red-500 mx-auto"></i>
+                        <p class="text-hozon-ivory font-light font-spectral">${err.message}</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // Dialogue Modal Handlers
+        function selectDialogue(key) {
+            loadContentToModal('dialogue', key);
+        }
+
+        function selectStudy(key) {
+            loadContentToModal('studies', key);
+        }
+
+        function selectLibrary(key) {
+            loadContentToModal('library', key);
+        }
+
+        function closeDialogueModal() {
+            const modal = document.getElementById('dialogue-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('parchment-theme'); // Reset to dark theme on close
+            document.body.style.overflow = ''; // Restore scroll
+        }
+
+        function setModalTheme(theme) {
+            const modal = document.getElementById('dialogue-modal');
+            const darkBtn = document.getElementById('modal-theme-dark-btn');
+            const parchmentBtn = document.getElementById('modal-theme-parchment-btn');
+            const container = document.getElementById('modal-container');
+            const header = document.getElementById('modal-header');
+            const body = document.getElementById('modal-body');
+            const footer = document.getElementById('modal-footer');
+            const footerText = document.getElementById('modal-footer-text');
+            const footerBtn = document.getElementById('modal-footer-btn');
+            const toggleBg = document.querySelector('.modal-theme-toggle-bg');
+            if (!modal || !darkBtn || !parchmentBtn) return;
+            
+            if (theme === 'parchment') {
+                modal.classList.add('parchment-theme');
+                // Button states
+                parchmentBtn.className = "modal-theme-btn-active px-3 py-1.5 rounded-full transition-all font-bold";
+                parchmentBtn.style.cssText = "background-color: #8c6b23; color: #ffffff;";
+                darkBtn.className = "modal-theme-btn-inactive px-3 py-1.5 rounded-full transition-all";
+                darkBtn.style.cssText = "color: #705b41;";
+                // Toggle background
+                if (toggleBg) { toggleBg.style.cssText = "background-color: #e3d3b4; border-color: #c9b895;"; }
+                // Container
+                if (container) { container.style.cssText = "background-color: #f5ecd2; border-color: #d8c7a3; box-shadow: 0 25px 50px -12px rgba(112,84,23,0.25);"; }
+                // Header & Footer
+                if (header) { header.style.cssText = "background-color: #fcf8ee; border-bottom-color: #e3d3b4;"; }
+                if (footer) { footer.style.cssText = "background-color: #fcf8ee; border-top-color: #e3d3b4;"; }
+                // Body text
+                if (body) { body.style.color = "#2c2115"; }
+                // Footer elements
+                if (footerText) { footerText.style.color = "#8c785c"; }
+                if (footerBtn) { footerBtn.style.cssText = "border-color: #d8c7a3; color: #8c6b23; background-color: #fcf8ee;"; }
+            } else {
+                modal.classList.remove('parchment-theme');
+                // Reset button states
+                darkBtn.className = "modal-theme-btn-active px-3 py-1.5 rounded-full transition-all bg-hozon-gold text-[#010504] font-bold";
+                darkBtn.style.cssText = "";
+                parchmentBtn.className = "modal-theme-btn-inactive px-3 py-1.5 rounded-full transition-all text-hozon-ivoryMuted hover:text-hozon-gold";
+                parchmentBtn.style.cssText = "";
+                // Clear all inline styles
+                if (toggleBg) { toggleBg.style.cssText = ""; }
+                if (container) { container.style.cssText = ""; }
+                if (header) { header.style.cssText = ""; }
+                if (footer) { footer.style.cssText = ""; }
+                if (body) { body.style.color = ""; }
+                if (footerText) { footerText.style.color = ""; }
+                if (footerBtn) { footerBtn.style.cssText = ""; }
+            }
+        }
+
+        // Ambient Audio Management
+        let isMusicPlaying = false;
+
+        function toggleAmbientMusic() {
+            const audioEl = document.getElementById('ambient-audio');
+            const musicIcon = document.getElementById('music-icon');
+            if (!audioEl) return;
+            
+            if (isMusicPlaying) {
+                audioEl.pause();
+                if (musicIcon) {
+                    musicIcon.setAttribute('data-lucide', 'play');
+                }
+                isMusicPlaying = false;
+            } else {
+                audioEl.play().then(() => {
+                    isMusicPlaying = true;
+                    if (musicIcon) {
+                        musicIcon.setAttribute('data-lucide', 'pause');
+                    }
+                }).catch(err => {
+                    console.log("Audio play error:", err);
+                    if (err.name === 'NotAllowedError') {
+                        alert("Klik di mana saja pada layar terlebih dahulu untuk mengaktifkan izin suara dari browser, lalu coba klik tombol musik kembali.");
+                    } else {
+                        console.warn("Gagal memutar audio karena masalah jaringan/sumber:", err.message);
+                    }
+                });
+            }
+            lucide.createIcons(); // Re-render Lucide icons
+        }
+
+        function setMusicVolume(val) {
+            const audioEl = document.getElementById('ambient-audio');
+            if (audioEl) {
+                audioEl.volume = val;
+            }
+        }
+
+        function initCardTilt() {
+            const cards = document.querySelectorAll('.tilt-card');
+            cards.forEach(card => {
+                const onMouseMove = (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const xc = rect.width / 2;
+                    const yc = rect.height / 2;
+                    
+                    const angleX = -(y - yc) / yc * 8;
+                    const angleY = (x - xc) / xc * 8;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    card.style.boxShadow = `0 15px 35px rgba(212, 175, 55, 0.15), 0 5px 15px rgba(0, 0, 0, 0.5)`;
+                    card.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                };
+                
+                const onMouseLeave = () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                    card.style.boxShadow = '';
+                    card.style.borderColor = '';
+                };
+
+                card.removeEventListener('mousemove', card._onMouseMove);
+                card.removeEventListener('mouseleave', card._onMouseLeave);
+                
+                card._onMouseMove = onMouseMove;
+                card._onMouseLeave = onMouseLeave;
+                
+                card.addEventListener('mousemove', onMouseMove);
+                card.addEventListener('mouseleave', onMouseLeave);
+                
+                card.style.transition = 'transform 0.15s ease-out, border-color 0.25s ease, box-shadow 0.25s ease';
+            });
+        }
+
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.05,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        function initModalProgressBar() {
+            const modalBody = document.getElementById('modal-body');
+            const progressBar = document.getElementById('modal-progress-bar');
+            if (modalBody && progressBar) {
+                modalBody.addEventListener('scroll', () => {
+                    const scrollTop = modalBody.scrollTop;
+                    const scrollHeight = modalBody.scrollHeight;
+                    const clientHeight = modalBody.clientHeight;
+                    const totalScroll = scrollHeight - clientHeight;
+                    const scrollPercentage = totalScroll > 0 ? (scrollTop / totalScroll) * 100 : 0;
+                    progressBar.style.width = `${scrollPercentage}%`;
+                });
+            }
+        }
+
+        function initCustomCursor() {
+            // Only initialize on devices supporting hover/pointer:fine
+            if (window.matchMedia('(pointer: coarse)').matches) return;
+
+            const cursor = document.getElementById('custom-cursor');
+            const cursorRing = document.getElementById('custom-cursor-ring');
+            if (!cursor || !cursorRing) return;
+
+            let mouseX = -100, mouseY = -100;
+            let ringX = -100, ringY = -100;
+            let dotX = -100, dotY = -100;
+            let active = false;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!active) {
+                    active = true;
+                    cursor.style.opacity = '1';
+                    cursorRing.style.opacity = '1';
+                }
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursorRing.style.opacity = '0';
+                active = false;
+            });
+
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursorRing.style.opacity = '1';
+                active = true;
+            });
+
+            function updateCursor() {
+                // Smooth trailing for the ring
+                ringX += (mouseX - ringX) * 0.15;
+                ringY += (mouseY - ringY) * 0.15;
+                
+                // Slightly faster response for the dot
+                dotX += (mouseX - dotX) * 0.35;
+                dotY += (mouseY - dotY) * 0.35;
+                
+                cursor.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+                cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+                
+                requestAnimationFrame(updateCursor);
+            }
+            requestAnimationFrame(updateCursor);
+
+            // Listen to hovers on interactive items
+            document.addEventListener('mouseover', (e) => {
+                const target = e.target;
+                if (target && (
+                    target.tagName === 'A' || 
+                    target.tagName === 'BUTTON' || 
+                    target.closest('a') || 
+                    target.closest('button') || 
+                    target.closest('.tilt-card') || 
+                    target.closest('.cursor-pointer') ||
+                    target.hasAttribute('onclick') ||
+                    target.closest('[onclick]')
+                )) {
+                    cursor.classList.add('cursor-hover');
+                    cursorRing.classList.add('cursor-hover');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                const target = e.target;
+                if (target && (
+                    target.tagName === 'A' || 
+                    target.tagName === 'BUTTON' || 
+                    target.closest('a') || 
+                    target.closest('button') || 
+                    target.closest('.tilt-card') || 
+                    target.closest('.cursor-pointer') ||
+                    target.hasAttribute('onclick') ||
+                    target.closest('[onclick]')
+                )) {
+                    cursor.classList.remove('cursor-hover');
+                    cursorRing.classList.remove('cursor-hover');
+                }
+            });
+        }
+
+        // ── Studies Hub: group studies by `theme` into category boxes ──
+        // Canonical order of the 10 Ho Zon concepts (always shown as boxes).
+        const STUDY_THEME_ORDER = ['hozon', 'christos', 'logos', 'zoe', 'phos', 'pneuma', 'agape', 'aletheia', 'doxa', 'hodos'];
+
+        function buildStudyGroups(langData) {
+            const groups = {}; // theme slug -> [{ key, item }]
+            for (const [key, item] of Object.entries(langData.studies || {})) {
+                // In a non-base language, hide studies that have no real translation
+                // (compile.js flags these with _fallback). The list shows only what
+                // actually exists in the current language.
+                if (currentLang !== 'id' && item._fallback) continue;
+                const theme = (item.theme || 'lainnya').toString().toLowerCase();
+                (groups[theme] = groups[theme] || []).push({ key, item });
+            }
+            // Sort each group by `date` ascending (ISO YYYY-MM-DD sorts chronologically):
+            // oldest at the top, newest at the bottom — nearest the box when the list opens upward.
+            // Undated studies sort to the top (treated as oldest); filename breaks ties.
+            Object.values(groups).forEach(list => list.sort((a, b) => {
+                const da = (a.item.date || '').toString();
+                const db = (b.item.date || '').toString();
+                if (da !== db) return da < db ? -1 : 1;
+                return a.key.localeCompare(b.key);
+            }));
+            return groups;
+        }
+
+        function studyCatBoxHtml(theme, entries, langData) {
+            const concept = (langData.concepts || {})[theme];
+            const label = concept ? concept.map_label
+                : ((entries[0] && entries[0].item.theme_label) || (theme.charAt(0).toUpperCase() + theme.slice(1)));
+            const sublabel = concept ? (concept.map_sublabel || '') : '';
+            const count = entries.length;
+
+            // Empty concept box — dimmed placeholder, no interaction.
+            if (count === 0) {
+                return `
+                    <div class="study-cat relative border border-hozon-border rounded p-5 flex flex-col justify-between min-h-[128px] opacity-40 cursor-default select-none">
+                        <div>
+                            <h3 class="font-cinzel text-lg text-hozon-ivory leading-tight">${label}</h3>
+                            <p class="text-xs text-hozon-ivoryMuted font-light mt-0.5">${sublabel}</p>
+                        </div>
+                        <span class="mt-3 self-start text-[9px] tracking-[0.2em] uppercase font-cinzel text-hozon-goldMuted border border-hozon-border rounded-full px-2 py-0.5">${t('study_soon')}</span>
+                    </div>`;
+            }
+
+            const items = entries.map(({ key, item }) => `
+                <button onclick="event.stopPropagation(); selectStudy('${key}')" class="w-full text-left px-4 py-2.5 border-b border-hozon-border/60 last:border-0 hover:bg-hozon-card transition-colors group/item">
+                    <span class="block font-cinzel text-sm text-hozon-ivory group-hover/item:text-hozon-gold transition-colors line-clamp-2">${item.title}</span>
+                    <span class="block text-[10px] text-hozon-goldMuted font-cinzel tracking-wider mt-0.5">${item.category || ''}</span>
+                </button>`).join('');
+
+            return `
+                <div class="study-cat group relative border border-hozon-border bg-hozon-card/30 rounded p-5 flex flex-col justify-between min-h-[128px] cursor-pointer hover:border-hozon-goldMuted hover:bg-hozon-card transition-all" onclick="toggleStudyCat(this)" onmouseenter="positionStudyFlyout(this)">
+                    <div>
+                        <h3 class="font-cinzel text-lg text-hozon-ivory group-hover:text-hozon-gold transition-colors leading-tight">${label}</h3>
+                        <p class="text-xs text-hozon-ivoryMuted font-light mt-0.5">${sublabel}</p>
+                    </div>
+                    <div class="mt-3 flex items-center justify-between">
+                        <span class="text-[10px] tracking-[0.15em] uppercase font-cinzel text-hozon-gold">${count} ${t(count === 1 ? 'study_count_label_one' : 'study_count_label')}</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-hozon-goldMuted study-cat-caret transition-transform"></i>
+                    </div>
+                    <div class="study-flyout study-scroll hidden absolute left-0 top-full z-30 w-[max(100%,260px)] max-h-[min(70vh,520px)] overflow-y-auto overscroll-contain bg-hozon-dark border border-hozon-goldMuted rounded-b shadow-2xl shadow-black/60">
+                        ${items}
+                    </div>
+                </div>`;
+        }
+
+        function renderStudiesHub(langData) {
+            const groups = buildStudyGroups(langData);
+            let html = '';
+            // 10 canonical concept boxes, always shown (empty ones dimmed).
+            STUDY_THEME_ORDER.forEach(theme => {
+                html += studyCatBoxHtml(theme, groups[theme] || [], langData);
+                delete groups[theme];
+            });
+            // Any remaining non-concept themes (future topics: manusia, eskatologi, …).
+            Object.keys(groups).sort().forEach(theme => {
+                html += studyCatBoxHtml(theme, groups[theme], langData);
+            });
+            return html;
+        }
+
+        // Decide whether a category's list should open upward or downward, and cap its
+        // height to the room available on that side — so it scrolls internally and never
+        // overlaps the footer/header.
+        function positionStudyFlyout(box) {
+            const fly = box.querySelector('.study-flyout');
+            if (!fly) return;
+            const rect = box.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const margin = 16;
+            const headerH = 80; // sticky top nav
+            const footer = document.querySelector('footer');
+            const fRect = footer ? footer.getBoundingClientRect() : null;
+            const bottomLimit = fRect ? Math.min(vh, fRect.top) : vh; // never cover the footer
+            const spaceBelow = bottomLimit - rect.bottom - margin;
+            const spaceAbove = rect.top - headerH - margin;
+            // Prefer opening upward (keeps the footer untouched); fall back to downward
+            // only when the space above is too cramped and below is roomier.
+            const openUp = !(spaceAbove < 160 && spaceBelow > spaceAbove);
+            const room = openUp ? spaceAbove : spaceBelow;
+            box.classList.toggle('flyout-up', openUp);
+            fly.style.maxHeight = Math.max(140, Math.min(520, room)) + 'px';
+            // Reveal the newest study first: when opening upward the newest sits at the
+            // bottom (next to the box), so scroll the list to its bottom edge. Force a
+            // reflow then snap synchronously (works when the list is already shown, e.g. on
+            // hover); a rAF pass covers the case where it becomes visible a frame later.
+            const snapScroll = () => { fly.scrollTop = openUp ? fly.scrollHeight : 0; };
+            void fly.offsetHeight;
+            snapScroll();
+            requestAnimationFrame(snapScroll);
+        }
+
+        // Toggle a category flyout open (used for touch / click; desktop also opens on hover via CSS).
+        function toggleStudyCat(el) {
+            const wasOpen = el.classList.contains('open');
+            document.querySelectorAll('.study-cat.open').forEach(c => c.classList.remove('open'));
+            if (!wasOpen) {
+                el.classList.add('open');   // show first so the list is laid out …
+                positionStudyFlyout(el);    // … then position & snap-scroll to the newest
+            }
+        }
+
+        function initDynamicContent() {
+            const langData = getLangData();
+
+            // Dialogue
+            let dHtml = '';
+            for (const [key, item] of Object.entries(langData.dialogue)) {
+                dHtml += `
+                    <div onclick="selectDialogue('${key}')" class="tilt-card reveal-on-scroll cursor-pointer group border border-hozon-border bg-hozon-card/30 rounded p-6 space-y-4 hover:bg-hozon-card hover:border-hozon-goldMuted active:scale-95 transition-all duration-300">
+                        <div class="flex justify-between items-center text-xs font-cinzel text-hozon-goldMuted">
+                            <span>${item.category || 'DIALOGUE'}</span>
+                        </div>
+                        <h3 class="font-cinzel text-xl text-hozon-ivory group-hover:text-hozon-gold transition-colors">${item.title}</h3>
+                        <p class="text-hozon-ivoryMuted text-sm font-light leading-relaxed line-clamp-3">${item.description}</p>
+                        <span class="inline-flex items-center gap-1 text-xs font-cinzel text-hozon-gold group-hover:text-hozon-ivory transition-colors">${t('btn_read_dialogue')} <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></span>
+                    </div>
+                `;
+            }
+            document.getElementById('dialogue-container').innerHTML = dHtml;
+
+            // Studies — grouped into category boxes (hub view)
+            document.getElementById('studies-container').innerHTML = renderStudiesHub(langData);
+
+            // Library
+            let lHtml = '';
+            for (const [key, item] of Object.entries(langData.library)) {
+                lHtml += `
+                    <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h4 class="font-cinzel text-md text-hozon-ivory">${item.title}</h4>
+                            <p class="text-xs text-hozon-ivoryMuted font-light">${item.description}</p>
+                        </div>
+                        <button onclick="selectLibrary('${key}')" class="text-xs font-cinzel tracking-wider px-4 py-2 border border-hozon-border hover:border-hozon-gold hover:text-hozon-gold rounded bg-hozon-card/30">${t('btn_open_doc')}</button>
+                    </div>
+                `;
+            }
+            document.getElementById('library-container').innerHTML = lHtml;
+
+            // About
+            if (langData.about) {
+                let aboutBody = marked.parse(langData.about.body);
+                if (langData.about._fallback && currentLang === 'en') {
+                    aboutBody = `
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded border border-hozon-gold/25 bg-hozon-gold/5 text-hozon-gold text-xs font-sans">
+                            <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span>${t('fallback_badge')}</span>
+                        </div>
+                    ` + aboutBody;
+                }
+                document.getElementById('about-container').innerHTML = aboutBody;
+            }
+
+            initCardTilt();
+            initScrollReveal();
+        }
+        function initCosmicParticles() {
+            const canvas = document.getElementById('cosmic-particles-canvas');
+            const container = document.getElementById('network-map-container');
+            if (!canvas || !container) return;
+
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 45;
+            let width = 0;
+            let height = 0;
+            let mouseX = null;
+            let mouseY = null;
+
+            function resize() {
+                const rect = container.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                ctx.scale(dpr, dpr);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            
+            if (window.ResizeObserver) {
+                const ro = new ResizeObserver(() => resize());
+                ro.observe(container);
+            }
+
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                mouseX = null;
+                mouseY = null;
+            });
+
+            class Particle {
+                constructor() {
+                    this.reset(true);
+                }
+
+                reset(initial = false) {
+                    this.x = Math.random() * width;
+                    this.y = initial ? Math.random() * height : height + 10;
+                    this.size = Math.random() * 1.8 + 0.5;
+                    this.speedY = -(Math.random() * 0.4 + 0.15);
+                    this.speedX = (Math.random() - 0.5) * 0.1;
+                    this.alpha = Math.random() * 0.5 + 0.1;
+                    this.targetAlpha = Math.random() * 0.7 + 0.3;
+                    this.alphaSpeed = Math.random() * 0.005 + 0.002;
+                    this.waveSpeed = Math.random() * 0.02 + 0.005;
+                    this.waveRange = Math.random() * 0.8 + 0.2;
+                    this.angle = Math.random() * Math.PI * 2;
+                    
+                    const golds = [
+                        'rgba(212, 175, 55, ',
+                        'rgba(244, 215, 94, ',
+                        'rgba(184, 134, 11, ',
+                        'rgba(255, 223, 0, '
+                    ];
+                    this.colorPrefix = golds[Math.floor(Math.random() * golds.length)];
+                }
+
+                update() {
+                    this.y += this.speedY;
+                    this.angle += this.waveSpeed;
+                    this.x += this.speedX + Math.sin(this.angle) * this.waveRange * 0.08;
+
+                    if (this.alpha < this.targetAlpha) {
+                        this.alpha += this.alphaSpeed;
+                    } else {
+                        this.targetAlpha = Math.random() * 0.7 + 0.3;
+                        if (Math.random() < 0.1) this.alpha -= this.alphaSpeed * 2;
+                    }
+
+                    if (mouseX !== null && mouseY !== null) {
+                        const dx = mouseX - this.x;
+                        const dy = mouseY - this.y;
+                        const dist = Math.hypot(dx, dy);
+                        if (dist < 120) {
+                            const force = (120 - dist) / 120;
+                            this.x += (dx / dist) * force * 0.4;
+                            this.y += (dy / dist) * force * 0.4;
+                        }
+                    }
+
+                    if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.colorPrefix + Math.max(0, Math.min(1, this.alpha)) + ')';
+                    ctx.shadowBlur = this.size * 2;
+                    ctx.shadowColor = 'rgba(212, 175, 55, 0.5)';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = 'rgba(4, 13, 10, 0.02)';
+                ctx.fillRect(0, 0, width, height);
+                
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        // Initialize Lucide Icons on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initLanguage();
+            initCosmicParticles();
+            initScrollReveal();
+            initModalProgressBar();
+            // Close any open Studies category flyout when clicking outside a box.
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.study-cat')) {
+                    document.querySelectorAll('.study-cat.open').forEach(c => c.classList.remove('open'));
+                }
+            });
+            const audioEl = document.getElementById('ambient-audio');
+            if (audioEl) {
+                audioEl.volume = 0.3; // Default atmospheric soft volume (30%)
+            }
+        });
+    </script>
+
+    <!-- Custom Tailwind Animations for CSS Fade-ins -->
+    <style>
+        /* Smooth Page Transitions */
+        .section-fade {
+            transition: opacity 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        .section-fade-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Studies Hub — category flyout */
+        @media (hover: hover) {
+            .study-cat:hover .study-flyout { display: block; }
+        }
+        .study-cat.open .study-flyout { display: block; }
+        .study-cat.open .study-cat-caret { transform: rotate(180deg); }
+        /* Transparent bridge so moving the cursor from box into the list keeps :hover */
+        .study-cat .study-flyout::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            right: 0;
+            height: 8px;
+        }
+        /* Open upward: anchor to the bottom of the box and grow up */
+        .study-cat.flyout-up .study-flyout {
+            top: auto;
+            bottom: 100%;
+            border-radius: 0.375rem 0.375rem 0 0;
+        }
+        .study-cat.flyout-up .study-flyout::before {
+            top: auto;
+            bottom: -8px;
+        }
+        /* Visible gold scrollbar so long study lists are obviously scrollable */
+        .study-scroll { scrollbar-width: thin; scrollbar-color: #b8912f rgba(0,0,0,0.3); }
+        .study-scroll::-webkit-scrollbar { width: 9px; }
+        .study-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.35); }
+        .study-scroll::-webkit-scrollbar-thumb {
+            background: #b8912f;
+            border-radius: 5px;
+            border: 2px solid rgba(0,0,0,0.35);
+        }
+        .study-scroll::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+        /* Scroll Reveal Animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes livingGlow {
+            0%, 100% {
+                text-shadow: 0 0 15px rgba(212, 175, 55, 0.45), 0 0 5px rgba(212, 175, 55, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 45px rgba(212, 175, 55, 0.95), 0 0 20px rgba(212, 175, 55, 0.55), 0 0 5px rgba(255, 255, 255, 0.6);
+            }
+        }
+        .landing-title-animated {
+            animation: fadeInUp 1.2s ease forwards, livingGlow 5s ease-in-out infinite 1.2s;
+        }
+        @keyframes centerNodeTitlePulse {
+            0%, 100% {
+                text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 25px rgba(212, 175, 55, 0.95), 0 0 8px rgba(255, 255, 255, 0.6);
+            }
+        }
+        .center-node-title-glow {
+            animation: centerNodeTitlePulse 4s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleWidth {
+            from { width: 0; }
+            to { width: 5rem; }
+        }
+
+        /* Mystical Floating Keyframes (Independent drifting patterns) */
+        @keyframes floatSlow1 {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) translateY(-10px) rotate(1deg); }
+        }
+        @keyframes floatSlow2 {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) translateY(8px) translateX(-4px) rotate(-1deg); }
+        }
+        @keyframes floatSlow3 {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) translateY(-8px) translateX(5px) rotate(1.5deg); }
+        }
+        @keyframes floatSlow4 {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) translateY(12px) rotate(-1.5deg); }
+        }
+
+        /* Counter-rotating inner ring */
+        .spin-reverse {
+            animation: spin 50s linear infinite reverse;
+            transform-origin: 400px 200px;
+        }
+        .animate-float-1 { animation: floatSlow1 12s ease-in-out infinite; }
+        .animate-float-2 { animation: floatSlow2 10s ease-in-out infinite; }
+        .animate-float-3 { animation: floatSlow3 14s ease-in-out infinite; }
+        .animate-float-4 { animation: floatSlow4 11s ease-in-out infinite; }
+    </style>
+
+</body>
+</html>
